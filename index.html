@@ -10,51 +10,66 @@
   --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#7a6030;
   --dark:#0d0b08;--dark2:#181510;--dark3:#211e14;--dark4:#2a261a;--dark5:#332e20;
   --text:#f0e6cc;--text2:#9a8a68;--text3:#5a5040;
-  --red:#c0392b;--green:#27ae60;--blue:#2980b9;--purple:#8e44ad;--orange:#d35400;
+  --red:#c0392b;--green:#27ae60;--blue:#2980b9;--purple:#8e44ad;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{background:var(--dark);color:var(--text);font-family:'Noto Sans TC',sans-serif;min-height:100vh;padding-bottom:80px;}
+body{background:var(--dark);color:var(--text);font-family:'Noto Sans TC',sans-serif;min-height:100vh;}
 
-/* ── HEADER ── */
-.header{background:linear-gradient(180deg,#100e08,var(--dark2));border-bottom:1px solid var(--gold-dim);padding:14px 16px 10px;position:sticky;top:0;z-index:200;}
-.header-top{display:flex;align-items:center;justify-content:space-between;}
-.header h1{font-family:'Noto Serif TC',serif;font-size:18px;color:var(--gold);letter-spacing:3px;}
-.header-sub{font-size:11px;color:var(--text2);letter-spacing:2px;margin-top:2px;}
+/* ══ LOGIN ══ */
+#loginScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
+.login-logo{font-family:'Noto Serif TC',serif;font-size:28px;color:var(--gold);letter-spacing:4px;margin-bottom:6px;text-align:center;}
+.login-sub{font-size:12px;color:var(--text2);letter-spacing:3px;margin-bottom:36px;}
+.login-box{background:var(--dark3);border:1px solid var(--gold-dim);border-radius:16px;padding:24px;width:100%;max-width:340px;}
+.login-title{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--gold);letter-spacing:2px;margin-bottom:18px;text-align:center;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:11px;color:var(--text2);margin-bottom:5px;letter-spacing:1px;}
+.form-group input,.form-group select{width:100%;background:var(--dark4);border:1px solid #3a3425;border-radius:8px;color:var(--text);font-size:14px;font-family:'Noto Sans TC',sans-serif;padding:11px 13px;outline:none;-webkit-appearance:none;}
+.form-group input:focus{border-color:var(--gold-dim);}
+.btn-login{width:100%;background:linear-gradient(135deg,#7a5a10,var(--gold));border:none;border-radius:10px;color:#1a1208;font-size:15px;font-weight:700;font-family:'Noto Sans TC',sans-serif;padding:13px;cursor:pointer;letter-spacing:2px;margin-top:6px;}
+.login-err{color:var(--red);font-size:12px;text-align:center;margin-top:10px;min-height:16px;}
+.login-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:14px;line-height:1.8;}
 
-/* ── NAV ── */
-.nav{display:flex;background:var(--dark2);border-bottom:1px solid #2a2518;position:sticky;top:56px;z-index:199;}
-.nav button{flex:1;padding:11px 2px;background:none;border:none;color:var(--text2);font-size:12px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:1px;}
+/* ══ APP ══ */
+#appScreen{display:none;}
+.header{background:linear-gradient(180deg,#100e08,var(--dark2));border-bottom:1px solid var(--gold-dim);padding:12px 16px;position:sticky;top:0;z-index:200;}
+.header-row{display:flex;align-items:center;justify-content:space-between;}
+.header-title{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--gold);letter-spacing:2px;}
+.header-user{font-size:11px;color:var(--text2);display:flex;align-items:center;gap:8px;}
+.role-badge{display:inline-block;border-radius:4px;padding:2px 7px;font-size:10px;}
+.role-admin{background:#2a1a0e;color:#e09050;}
+.role-staff{background:#0e1e2e;color:#5aaae0;}
+.btn-logout{background:none;border:1px solid #3a3425;border-radius:6px;color:var(--text2);font-size:11px;font-family:'Noto Sans TC',sans-serif;padding:4px 9px;cursor:pointer;}
+
+.nav{display:flex;background:var(--dark2);border-bottom:1px solid #2a2518;position:sticky;top:52px;z-index:199;}
+.nav button{flex:1;padding:10px 2px;background:none;border:none;color:var(--text2);font-size:12px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:1px;}
 .nav button.active{color:var(--gold);border-bottom-color:var(--gold);}
 
-/* ── PAGES ── */
-.page{display:none;padding:14px;}
+.page{display:none;padding:13px;padding-bottom:80px;}
 .page.active{display:block;}
 
-/* ── CARDS ── */
-.card{background:var(--dark3);border:1px solid #2a2518;border-radius:12px;padding:15px;margin-bottom:10px;}
-.card-title{font-family:'Noto Serif TC',serif;font-size:13px;color:var(--gold);letter-spacing:2px;margin-bottom:13px;display:flex;align-items:center;gap:6px;}
-
-/* ── FORM ELEMENTS ── */
+/* ══ CARDS ══ */
+.card{background:var(--dark3);border:1px solid #2a2518;border-radius:12px;padding:14px;margin-bottom:10px;}
+.card-title{font-family:'Noto Serif TC',serif;font-size:13px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;}
 label{display:block;font-size:11px;color:var(--text2);margin-bottom:4px;margin-top:11px;letter-spacing:1px;}
 label:first-child{margin-top:0;}
-select,input[type="text"],input[type="number"],input[type="date"],textarea{
+select,input[type="text"],input[type="number"],input[type="date"],input[type="month"]{
   width:100%;background:var(--dark4);border:1px solid #3a3425;border-radius:8px;
   color:var(--text);font-size:14px;font-family:'Noto Sans TC',sans-serif;
   padding:10px 12px;outline:none;-webkit-appearance:none;appearance:none;
 }
-select:focus,input:focus,textarea:focus{border-color:var(--gold-dim);}
+select:focus,input:focus{border-color:var(--gold-dim);}
 option{background:var(--dark3);}
-textarea{resize:none;height:70px;line-height:1.6;}
 
-/* ── BUTTONS ── */
+/* ══ BUTTONS ══ */
 .btn-gold{width:100%;background:linear-gradient(135deg,#7a5a10,var(--gold));border:none;border-radius:10px;color:#1a1208;font-size:15px;font-weight:700;font-family:'Noto Sans TC',sans-serif;padding:13px;cursor:pointer;letter-spacing:2px;margin-top:14px;}
 .btn-ghost{background:none;border:1px solid #3a3425;border-radius:8px;color:var(--text2);font-size:13px;font-family:'Noto Sans TC',sans-serif;padding:8px 14px;cursor:pointer;}
 .btn-sm{background:none;border:1px solid #3a3425;border-radius:6px;color:var(--text2);font-size:12px;font-family:'Noto Sans TC',sans-serif;padding:5px 10px;cursor:pointer;}
 .btn-sm.danger{border-color:#c0392b44;color:var(--red);}
 .btn-sm.success{border-color:#27ae6044;color:var(--green);}
 .btn-sm.primary{border-color:var(--gold-dim);color:var(--gold);}
+.btn-sm:disabled{opacity:.35;cursor:not-allowed;}
 
-/* ── VENDOR CHIPS ── */
+/* ══ CHIPS ══ */
 .chip{display:inline-block;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:500;white-space:nowrap;}
 .chip-明得堂{background:#0e1e2e;color:#5aaae0;}
 .chip-無名祭品{background:#2a0e0e;color:#e07070;}
@@ -62,200 +77,256 @@ textarea{resize:none;height:70px;line-height:1.6;}
 .chip-法事{background:#1e0e2a;color:#c070e0;}
 .chip-今榮租車{background:#2a1e0e;color:#e0b050;}
 
-/* ── CASE LIST ── */
-.case-card{background:var(--dark3);border:1px solid #2a2518;border-radius:12px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
-.case-card:active{border-color:var(--gold-dim);}
-.case-header{padding:14px 15px;display:flex;justify-content:space-between;align-items:center;}
+/* ══ CASE CARDS ══ */
+.case-card{background:var(--dark3);border:1px solid #2a2518;border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.case-head{padding:13px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
 .case-name{font-family:'Noto Serif TC',serif;font-size:16px;color:var(--gold);}
-.case-meta{font-size:11px;color:var(--text2);margin-top:3px;}
-.case-total{text-align:right;}
-.case-total-num{font-size:17px;font-weight:600;color:var(--text);}
-.case-total-sub{font-size:11px;color:var(--text2);margin-top:2px;}
-.case-chips{display:flex;gap:5px;flex-wrap:wrap;padding:0 15px 12px;}
-.case-expand{background:var(--dark4);border-top:1px solid #2a2518;padding:14px 15px;display:none;}
+.case-meta{font-size:11px;color:var(--text2);margin-top:2px;}
+.case-right{text-align:right;}
+.case-total{font-size:17px;font-weight:600;}
+.case-sub{font-size:11px;color:var(--text2);margin-top:2px;}
+.case-chips{display:flex;gap:5px;flex-wrap:wrap;padding:0 14px 11px;}
+.case-expand{background:var(--dark4);border-top:1px solid #2a2518;padding:13px 14px;display:none;}
 .case-expand.open{display:block;}
 
-/* 廠商區塊 */
-.vendor-block{margin-bottom:12px;}
-.vendor-block-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.vendor-block-items{background:var(--dark5);border-radius:8px;padding:10px 12px;}
-.item-line{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #2a2518;font-size:13px;}
-.item-line:last-child{border-bottom:none;}
-.item-line-name{color:var(--text);flex:1;}
-.item-line-detail{color:var(--text2);font-size:12px;margin-left:8px;}
-.item-line-price{color:var(--gold);font-weight:500;margin-left:8px;}
-.vendor-subtotal{display:flex;justify-content:flex-end;margin-top:6px;font-size:13px;color:var(--text2);}
-.vendor-subtotal strong{color:var(--text);margin-left:6px;}
+.vendor-block{margin-bottom:11px;}
+.vendor-block-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.vendor-items-box{background:var(--dark5);border-radius:8px;padding:9px 11px;}
+.exp-line{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #2a2518;}
+.exp-line:last-child{border-bottom:none;}
+.exp-line-info{flex:1;}
+.exp-line-name{font-size:13px;color:var(--text);}
+.exp-line-detail{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.6;}
+.exp-line-note{font-size:11px;color:var(--text3);font-style:italic;margin-top:1px;}
+.exp-line-date{font-size:10px;color:var(--text3);margin-top:1px;}
+.exp-line-price{font-size:13px;color:var(--gold);font-weight:500;white-space:nowrap;}
+.vendor-sub-total{display:flex;justify-content:flex-end;font-size:12px;color:var(--text2);margin-top:5px;}
+.vendor-sub-total strong{color:var(--text);margin-left:5px;}
 
-.note-line{font-size:12px;color:var(--text2);margin-top:6px;font-style:italic;}
+.action-row{display:flex;gap:7px;margin-top:11px;padding-top:11px;border-top:1px solid #2a2518;flex-wrap:wrap;}
 
-.action-row{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #2a2518;}
-
-/* ── ITEM PICKER ── */
-.item-picker-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.item-search input{padding-left:34px;}
-.item-search{position:relative;margin-bottom:8px;}
+/* ══ ITEM PICKER ══ */
+.item-search{position:relative;margin-bottom:7px;}
+.item-search input{padding-left:32px;}
 .item-search::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;}
-.item-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-height:250px;overflow-y:auto;}
-.item-btn{background:var(--dark4);border:1px solid #3a3425;border-radius:8px;color:var(--text);padding:8px;font-size:12px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;text-align:left;line-height:1.5;transition:all .15s;}
+.item-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-height:240px;overflow-y:auto;}
+.item-btn{background:var(--dark4);border:1px solid #3a3425;border-radius:8px;color:var(--text);padding:8px;font-size:12px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;text-align:left;line-height:1.5;}
 .item-btn.sel{background:#2a2010;border-color:var(--gold-dim);}
 .item-btn .iname{display:block;font-size:12px;}
 .item-btn .iprice{display:block;color:var(--gold);font-size:11px;}
-
-.selected-block{margin-top:10px;}
-.sel-item-row{display:flex;align-items:center;gap:8px;background:var(--dark4);border-radius:8px;padding:8px 10px;margin-bottom:5px;}
+.sel-item-row{display:flex;align-items:center;gap:7px;background:var(--dark4);border-radius:8px;padding:7px 10px;margin-bottom:5px;}
 .sel-item-name{flex:1;font-size:13px;}
-.sel-item-qty{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text2);}
-.sel-item-qty input{width:48px;text-align:center;font-size:13px;padding:4px 6px;}
-.sel-item-price{font-size:13px;color:var(--gold);min-width:55px;text-align:right;}
+.sel-qty{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);}
+.sel-qty input{width:46px;text-align:center;font-size:13px;padding:4px 6px;}
+.sel-price{font-size:13px;color:var(--gold);min-width:52px;text-align:right;}
 .sel-remove{background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0 2px;}
 
-/* ── STATS ── */
+/* ══ STATS ══ */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
-.stat-box{background:var(--dark3);border:1px solid #2a2518;border-radius:10px;padding:13px;text-align:center;}
+.stat-box{background:var(--dark3);border:1px solid #2a2518;border-radius:10px;padding:12px;text-align:center;}
 .stat-num{font-size:20px;font-weight:600;color:var(--gold);}
 .stat-label{font-size:11px;color:var(--text2);margin-top:3px;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2a2518;font-size:14px;}
+.sum-row:last-child{border-bottom:none;}
+.sum-amount{color:var(--gold);font-weight:500;}
+.sum-sub{font-size:11px;color:var(--text2);margin-top:2px;}
 
-.summary-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #2a2518;font-size:14px;}
-.summary-row:last-child{border-bottom:none;}
-.summary-name{color:var(--text);}
-.summary-right{text-align:right;}
-.summary-amount{color:var(--gold);font-weight:500;}
-.summary-sub{font-size:11px;color:var(--text2);margin-top:2px;}
+/* ══ ADMIN ══ */
+.user-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2a2518;font-size:14px;}
+.user-row:last-child{border-bottom:none;}
 
-/* ── FILTERS ── */
-.filter-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;}
-.filter-btn{background:var(--dark3);border:1px solid #3a3425;border-radius:18px;color:var(--text2);font-size:12px;font-family:'Noto Sans TC',sans-serif;padding:5px 13px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
-.filter-btn.active{background:#2a2010;border-color:var(--gold-dim);color:var(--gold);}
-
-/* ── MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:#000000bb;z-index:500;display:none;align-items:flex-end;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--dark2);border-radius:16px 16px 0 0;border-top:1px solid var(--gold-dim);padding:20px 16px;width:100%;max-height:90vh;overflow-y:auto;}
-.modal-title{font-family:'Noto Serif TC',serif;font-size:16px;color:var(--gold);letter-spacing:2px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
+/* ══ MODAL ══ */
+.overlay{position:fixed;inset:0;background:#000000bb;z-index:500;display:none;align-items:flex-end;}
+.overlay.open{display:flex;}
+.modal{background:var(--dark2);border-radius:16px 16px 0 0;border-top:1px solid var(--gold-dim);padding:20px 16px;width:100%;max-height:92vh;overflow-y:auto;}
+.modal-title{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--gold);letter-spacing:2px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;}
 .modal-close{background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;padding:0;}
 
-/* ── MISC ── */
-.divider{height:1px;background:#2a2518;margin:12px 0;}
+/* ══ MISC ══ */
+.filter-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:11px;}
+.filter-btn{background:var(--dark3);border:1px solid #3a3425;border-radius:18px;color:var(--text2);font-size:12px;font-family:'Noto Sans TC',sans-serif;padding:5px 12px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.filter-btn.active{background:#2a2010;border-color:var(--gold-dim);color:var(--gold);}
+.divider{height:1px;background:#2a2518;margin:11px 0;}
+.row2{display:flex;gap:8px;}
+.row2>div{flex:1;}
 .empty{text-align:center;padding:40px 16px;color:var(--text2);font-size:14px;}
 .empty .icon{font-size:36px;margin-bottom:10px;}
 .badge-paid{display:inline-block;background:#27ae6022;color:var(--green);border-radius:4px;padding:1px 7px;font-size:10px;}
 .badge-unpaid{display:inline-block;background:#c0392b22;color:var(--red);border-radius:4px;padding:1px 7px;font-size:10px;}
-.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--gold);color:#1a1208;border-radius:20px;padding:9px 20px;font-size:13px;font-weight:600;opacity:0;transition:all .25s;z-index:999;white-space:nowrap;pointer-events:none;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--gold);color:#1a1208;border-radius:20px;padding:9px 20px;font-size:13px;font-weight:600;opacity:0;transition:all .25s;z-index:999;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.row2{display:flex;gap:8px;}
-.row2>div{flex:1;}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--gold-dim);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.sync-bar{font-size:11px;color:var(--text2);text-align:center;padding:5px;background:var(--dark2);border-bottom:1px solid #2a2518;}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-top">
-    <div>
-      <h1>葬儀帳款</h1>
-      <div class="header-sub">案件整合管理系統</div>
+<!-- ════════════ LOGIN ════════════ -->
+<div id="loginScreen">
+  <div class="login-logo">祥安生命</div>
+  <div class="login-sub">葬儀帳款管理系統</div>
+  <div class="login-box">
+    <div class="login-title">員工登入</div>
+    <div class="form-group">
+      <label>帳號</label>
+      <input type="text" id="loginUser" placeholder="輸入帳號" autocomplete="username">
     </div>
-    <button class="btn-ghost" onclick="openNewCase()">＋ 新案</button>
+    <div class="form-group">
+      <label>密碼</label>
+      <input type="password" id="loginPass" placeholder="輸入密碼" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-login" onclick="doLogin()">登入</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-hint">
+      測試帳號：<br>
+      老闆 admin / boss1234<br>
+      員工 staff1 / staff123
+    </div>
   </div>
 </div>
 
-<div class="nav">
-  <button class="active" onclick="showPage('cases')">📋 案件</button>
-  <button onclick="showPage('stats')">📊 統計</button>
+<!-- ════════════ APP ════════════ -->
+<div id="appScreen">
+  <div class="header">
+    <div class="header-row">
+      <div class="header-title">葬儀帳款</div>
+      <div class="header-user">
+        <span id="headerName"></span>
+        <span id="headerRole" class="role-badge"></span>
+        <button class="btn-logout" onclick="doLogout()">登出</button>
+      </div>
+    </div>
+  </div>
+  <div class="sync-bar" id="syncBar">⏳ 載入中...</div>
+
+  <div class="nav" id="mainNav">
+    <button class="active" onclick="showPage('cases')">📋 案件</button>
+    <button onclick="showPage('stats')">📊 統計</button>
+    <button id="adminNavBtn" onclick="showPage('admin')" style="display:none;">⚙️ 管理</button>
+  </div>
+
+  <!-- 案件頁 -->
+  <div id="page-cases" class="page active">
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <input type="text" id="searchCase" placeholder="🔍 搜尋亡者..." oninput="renderCases()" style="flex:1;">
+      <select id="filterStatus" onchange="renderCases()" style="width:90px;">
+        <option value="">全部</option>
+        <option value="0">未結清</option>
+        <option value="1">已結清</option>
+      </select>
+    </div>
+    <div class="filter-row" id="caseMonthFilter"></div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+      <button class="btn-ghost" onclick="openNewCase()">＋ 新增案件</button>
+    </div>
+    <div id="caseList"></div>
+  </div>
+
+  <!-- 統計頁 -->
+  <div id="page-stats" class="page">
+    <div class="filter-row" id="statsMonthFilter"></div>
+    <div class="stat-grid" id="statGrid"></div>
+    <div class="card">
+      <div class="card-title">🏢 廠商統計</div>
+      <div id="vendorStats"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📅 月份統計</div>
+      <div id="monthStats"></div>
+    </div>
+  </div>
+
+  <!-- 管理頁（老闆專用） -->
+  <div id="page-admin" class="page">
+    <div class="card">
+      <div class="card-title">👥 帳號管理</div>
+      <div id="userList"></div>
+      <button class="btn-ghost" style="margin-top:12px;width:100%;" onclick="openAddUser()">＋ 新增帳號</button>
+    </div>
+    <div class="card">
+      <div class="card-title">🔄 資料備份</div>
+      <button class="btn-ghost" style="width:100%;margin-bottom:8px;" onclick="exportData()">📤 匯出全部資料（JSON）</button>
+      <button class="btn-ghost" style="width:100%;" onclick="document.getElementById('importFile').click()">📥 匯入資料</button>
+      <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)">
+    </div>
+  </div>
 </div>
 
-<!-- ════════════ 案件頁 ════════════ -->
-<div id="page-cases" class="page active">
-  <div style="display:flex;gap:8px;margin-bottom:10px;">
-    <input type="text" id="searchCase" placeholder="🔍 搜尋亡者姓名..." oninput="renderCases()" style="flex:1;">
-    <select id="filterStatus" onchange="renderCases()" style="width:90px;">
-      <option value="">全部</option>
-      <option value="0">未結清</option>
-      <option value="1">已結清</option>
-    </select>
-  </div>
-  <div class="filter-row" id="caseMonthFilter"></div>
-  <div id="caseList"></div>
-</div>
-
-<!-- ════════════ 統計頁 ════════════ -->
-<div id="page-stats" class="page">
-  <div class="filter-row" id="statsMonthFilter"></div>
-  <div class="stat-grid" id="statGrid"></div>
-
-  <div class="card">
-    <div class="card-title">🏢 廠商統計</div>
-    <div id="vendorStats"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">📅 月份統計</div>
-    <div id="monthStats"></div>
-  </div>
-</div>
-
-<!-- ════════════ 新增案件 Modal ════════════ -->
-<div class="modal-overlay" id="modalNewCase">
+<!-- ══ 新增案件 Modal ══ -->
+<div class="overlay" id="modalNewCase">
   <div class="modal">
     <div class="modal-title">新增案件 <button class="modal-close" onclick="closeModal('modalNewCase')">✕</button></div>
     <label>亡者姓名</label>
     <input type="text" id="nc-name" placeholder="例：陳呂玉麵">
     <div class="row2">
       <div><label>往生日期</label><input type="date" id="nc-date"></div>
-      <div><label>月份（帳款）</label><input type="month" id="nc-month"></div>
+      <div><label>帳款月份</label><input type="month" id="nc-month"></div>
     </div>
+    <label>承辦人員</label>
+    <input type="text" id="nc-staff" placeholder="自動填入登入者">
     <label>備註</label>
-    <input type="text" id="nc-note" placeholder="選填，例：台北市某某殯儀館">
+    <input type="text" id="nc-note" placeholder="例：台北市某殯儀館">
     <button class="btn-gold" onclick="saveNewCase()">建立案件</button>
   </div>
 </div>
 
-<!-- ════════════ 新增費用 Modal ════════════ -->
-<div class="modal-overlay" id="modalAddExpense">
+<!-- ══ 新增費用 Modal ══ -->
+<div class="overlay" id="modalAddExp">
   <div class="modal">
-    <div class="modal-title" id="expModalTitle">新增費用 <button class="modal-close" onclick="closeModal('modalAddExpense')">✕</button></div>
-
+    <div class="modal-title" id="expModalTitle">新增費用
+      <button class="modal-close" onclick="closeModal('modalAddExp')">✕</button>
+    </div>
     <label>廠商類別</label>
     <select id="exp-vendor" onchange="onExpVendorChange()">
       <option value="">選擇廠商</option>
       <option>明得堂</option>
       <option>無名祭品</option>
-      <option>基隆烹廚祭品</option>
-      <option>芃宸法事</option>
+      <option>烹廚祭品</option>
+      <option>法事</option>
       <option>今榮租車</option>
     </select>
-
-    <label>費用名稱／說明</label>
-    <input type="text" id="exp-label" placeholder="例：頭七法事、三牲四果、靈車">
-
-    <div id="exp-item-section" style="display:none;margin-top:12px;">
-      <div class="card-title" style="font-size:12px;">從品項選擇</div>
+    <label>費用說明</label>
+    <input type="text" id="exp-label" placeholder="例：頭七法事、三牲四果">
+    <div id="exp-item-section" style="display:none;margin-top:11px;">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px;">從品項選擇</div>
       <div class="item-search"><input type="text" id="exp-search" placeholder="搜尋品項..." oninput="renderExpItems()"></div>
       <div class="item-grid" id="exp-item-grid"></div>
-      <div class="selected-block" id="exp-selected-block"></div>
+      <div id="exp-sel-block"></div>
       <div class="divider"></div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">自訂品項</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px;">自訂品項</div>
       <div class="row2">
-        <div><input type="text" id="exp-custom-name" placeholder="品項名稱"></div>
-        <div><input type="number" id="exp-custom-price" placeholder="單價"></div>
+        <div><input type="text" id="exp-cname" placeholder="品項名稱"></div>
+        <div><input type="number" id="exp-cprice" placeholder="單價"></div>
       </div>
-      <button class="btn-ghost" style="margin-top:6px;width:100%;" onclick="addExpCustomItem()">＋ 加入</button>
+      <button class="btn-ghost" style="margin-top:6px;width:100%;" onclick="addExpCustom()">＋ 加入</button>
     </div>
-
-    <div class="row2" style="margin-top:12px;">
-      <div>
-        <label>金額（元）</label>
-        <input type="number" id="exp-amount" placeholder="0">
-      </div>
-      <div>
-        <label>日期</label>
-        <input type="date" id="exp-date">
-      </div>
+    <div class="row2" style="margin-top:11px;">
+      <div><label>金額（元）</label><input type="number" id="exp-amount" placeholder="0"></div>
+      <div><label>日期</label><input type="date" id="exp-date"></div>
     </div>
-
     <label>備註</label>
     <input type="text" id="exp-note" placeholder="選填">
-
     <button class="btn-gold" onclick="saveExpense()">儲存費用</button>
+  </div>
+</div>
+
+<!-- ══ 新增帳號 Modal ══ -->
+<div class="overlay" id="modalAddUser">
+  <div class="modal">
+    <div class="modal-title">新增帳號 <button class="modal-close" onclick="closeModal('modalAddUser')">✕</button></div>
+    <label>姓名</label>
+    <input type="text" id="nu-name" placeholder="例：小美">
+    <label>帳號</label>
+    <input type="text" id="nu-user" placeholder="登入用帳號（英文）">
+    <label>密碼</label>
+    <input type="password" id="nu-pass" placeholder="至少6位">
+    <label>角色</label>
+    <select id="nu-role">
+      <option value="staff">員工（可新增，不可刪除）</option>
+      <option value="admin">老闆（完整權限）</option>
+    </select>
+    <button class="btn-gold" onclick="saveNewUser()">建立帳號</button>
   </div>
 </div>
 
@@ -263,12 +334,17 @@ textarea{resize:none;height:70px;line-height:1.6;}
 
 <script>
 // ════════════════════════════════════════════
-// 品項資料
+// 說明：
+// 這套系統使用 localStorage 模擬雲端資料庫
+// 實際多人共用請將資料存到 Firebase / Supabase
+// 或請工程師架設後端 API
 // ════════════════════════════════════════════
+
+// ══ 品項資料庫 ══
 const VENDOR_ITEMS = {
   '明得堂':[
     {n:'九朵蓮花盤',u:'組',p:140},{n:'九色九朵蓮花(3朵1串3串)',u:'組',p:360},
-    {n:'蓮花(3朵一串)(3串9朵)+S',u:'組',p:180},{n:'蓮花寶塔巨無霸(高度26)',u:'對',p:1550},
+    {n:'蓮花(3朵一串)(3串9朵)',u:'組',p:180},{n:'蓮花寶塔巨無霸',u:'對',p:1550},
     {n:'紅迷你108蓮花被',u:'件',p:500},{n:'冥財箱',u:'箱',p:170},
     {n:'庫錢(萬善堂含清潔費)',u:'包',p:85},{n:'D庫錢(箱)-長程',u:'箱',p:55},
     {n:'庫錢(東丰火爐含清潔費)',u:'包',p:85},{n:'功德紙錢(三色金)',u:'份',p:150},
@@ -276,94 +352,156 @@ const VENDOR_ITEMS = {
     {n:'薄黑長袍4.5尺',u:'件',p:60},{n:'薄黑袍5尺',u:'件',p:60},
     {n:'薄黑袍2.5尺',u:'件',p:60},{n:'薄黑袍3尺',u:'件',p:60},
     {n:'男西裝-黑',u:'套',p:650},{n:'男西裝-黑條',u:'套',p:650},
-    {n:'男西裝-灰',u:'套',p:650},{n:'男西裝/5L加大/灰條',u:'套',p:1200},
-    {n:'彩色絲衣袱-棗紅金',u:'件',p:700},{n:'彩色絲衣袱-粉 X',u:'套',p:1200},
-    {n:'彩色絲壽鞋-棗紅/黑紅 女',u:'雙',p:150},{n:'彩色絲壽鞋*40',u:'盒',p:200},
-    {n:'希-華麗別墅-$4800',u:'間',p:1920},{n:'希-華麗別墅+浪漫花園B',u:'組',p:4400},
-    {n:'希-三星手機組(定價900元)',u:'盒',p:450},{n:'希-平板電腦(定價1200元)',u:'盒',p:600},
-    {n:'希-文房四寶禮盒',u:'組',p:1600},{n:'希-按摩椅(定價2800元)',u:'台',p:1400},
-    {n:'萬-運動鞋(耐吉)300',u:'雙',p:150},{n:'小魂身(男/女)',u:'個',p:0},
-    {n:'湯圓/八寶粥(買房子贈送)',u:'份',p:0},{n:'往生被',u:'件',p:50},
-    {n:'(24H)905環保龍王香環',u:'盒',p:60},{n:'高級香環架(金色)',u:'個',p:140},
-    {n:'點-2號屋紙紮屋富貴名園',u:'間',p:2500},{n:'7903三色毛巾+提袋(祥安)',u:'組',p:38},
-    {n:'9007兔子無燃毛巾+皂紙盒',u:'盒',p:100},{n:'1605繡PLAYBOY紗布小方巾',u:'條',p:40},
-    {n:'2368平線雨傘毛巾+提袋符',u:'組',p:45},{n:'老船長(小)青白禮盒',u:'盒',p:180},
-    {n:'300ml竹炭瓶水',u:'箱',p:90},{n:'300ml竹炭瓶水(外場)',u:'箱',p:100},
+    {n:'男西裝-灰',u:'套',p:650},{n:'男西裝/5L加大',u:'套',p:1200},
+    {n:'彩色絲衣袱-棗紅金',u:'件',p:700},{n:'彩色絲衣袱-粉',u:'套',p:1200},
+    {n:'彩色絲壽鞋-女',u:'雙',p:150},{n:'希-華麗別墅',u:'間',p:1920},
+    {n:'希-華麗別墅+浪漫花園',u:'組',p:4400},{n:'希-三星手機組',u:'盒',p:450},
+    {n:'希-平板電腦',u:'盒',p:600},{n:'希-文房四寶禮盒',u:'組',p:1600},
+    {n:'希-按摩椅',u:'台',p:1400},{n:'萬-運動鞋(耐吉)',u:'雙',p:150},
+    {n:'小魂身(男/女)',u:'個',p:0},{n:'湯圓/八寶粥(贈送)',u:'份',p:0},
+    {n:'往生被',u:'件',p:50},{n:'(24H)905環保龍王香環',u:'盒',p:60},
+    {n:'高級香環架(金色)',u:'個',p:140},{n:'點-2號屋紙紮屋富貴名園',u:'間',p:2500},
+    {n:'7903三色毛巾+提袋(祥安)',u:'組',p:38},{n:'9007兔子無燃毛巾+皂紙盒',u:'盒',p:100},
+    {n:'1605繡紗布小方巾',u:'條',p:40},{n:'2368雨傘毛巾+提袋',u:'組',p:45},
+    {n:'老船長(小)青白禮盒',u:'盒',p:180},{n:'300ml竹炭瓶水',u:'箱',p:90},
     {n:'粉雙連(B1)',u:'包',p:100},{n:'小銀56支',u:'件',p:220},
     {n:'無字-1斤安斗燭(白)',u:'對',p:75},{n:'無字-1斤安斗燭(紅)',u:'對',p:75},
     {n:'金釘子+紅布',u:'支',p:20},{n:'白色手尾錢-伸縮帶',u:'包',p:300},
-    {n:'藍色手尾錢-伸縮帶',u:'包',p:300},{n:'正-黃金杜拜箱 定價$3000',u:'個',p:1500},
+    {n:'藍色手尾錢-伸縮帶',u:'包',p:300},{n:'正-黃金杜拜箱',u:'個',p:1500},
     {n:'抹草濕紙(良友)',u:'盒',p:200},{n:'空毛巾紙盒',u:'個',p:6},
-    {n:'浮符(1000張)',u:'張',p:0.2},{n:'清潔費/萬善堂/房.蓮花',u:'筆',p:900},
-    {n:'清潔費/萬善堂/房',u:'筆',p:600},{n:'雙色緞/旗袍外套/棗紅',u:'套',p:700},
+    {n:'清潔費/萬善堂/房.蓮花',u:'筆',p:900},{n:'清潔費/萬善堂/房',u:'筆',p:600},
+    {n:'雙色緞/旗袍外套',u:'套',p:700},{n:'六菜湯飯組',u:'付',p:1600},
   ],
   '無名祭品':[
     {n:'大五牲',u:'付',p:1800},{n:'外家大五牲',u:'付',p:1800},
-    {n:'素大五牲',u:'付',p:1200},{n:'素外家大五牲',u:'付',p:1200},
-    {n:'葷三牲',u:'付',p:900},{n:'素三牲',u:'付',p:700},
-    {n:'素三盤',u:'付',p:700},{n:'生小三牲',u:'付',p:150},
-    {n:'葷十二菜碗(紙碗)',u:'付',p:400},{n:'葷十二菜碗(瓷碗)',u:'付',p:750},
-    {n:'素十二菜碗(紙碗)',u:'付',p:400},{n:'素十二菜碗(瓷碗)',u:'付',p:750},
-    {n:'葷六菜碗(紙碗)',u:'付',p:250},{n:'葷六菜碗(瓷碗)',u:'付',p:425},
-    {n:'素六菜碗(紙碗)',u:'付',p:250},{n:'素六菜碗(瓷碗)',u:'付',p:425},
-    {n:'素盤',u:'盤',p:250},{n:'四果',u:'份',p:400},
-    {n:'水果塔',u:'盤',p:350},{n:'綜合水果',u:'盤',p:180},
-    {n:'大發糕+大蛋糕',u:'組',p:300},{n:'大蛋糕',u:'個',p:150},
-    {n:'小發糕',u:'個',p:40},{n:'紅圓',u:'個',p:40},
-    {n:'紅龜',u:'個',p:40},{n:'湯圓三碗',u:'份',p:90},
-    {n:'冥財箱',u:'份',p:250},{n:'功德紙錢(三色金)',u:'份',p:150},
-    {n:'蓮花九朵',u:'串',p:170},{n:'瓶花',u:'對',p:250},
-    {n:'米飯',u:'鍋',p:200},{n:'茶',u:'瓶',p:25},
-    {n:'酒',u:'瓶',p:50},{n:'水',u:'瓶',p:10},
-    {n:'飯',u:'碗',p:10},{n:'湯匙',u:'支',p:50},
-    {n:'飯匙',u:'支',p:50},{n:'米',u:'包',p:200},
-    {n:'瓶水',u:'箱',p:120},{n:'六菜湯飯組',u:'付',p:1600},
+    {n:'素大五牲',u:'付',p:1200},{n:'葷三牲',u:'付',p:900},
+    {n:'素三牲',u:'付',p:700},{n:'素三盤',u:'付',p:700},
+    {n:'生小三牲',u:'付',p:150},{n:'葷十二菜碗(紙碗)',u:'付',p:400},
+    {n:'葷十二菜碗(瓷碗)',u:'付',p:750},{n:'素十二菜碗(紙碗)',u:'付',p:400},
+    {n:'素十二菜碗(瓷碗)',u:'付',p:750},{n:'葷六菜碗(紙碗)',u:'付',p:250},
+    {n:'葷六菜碗(瓷碗)',u:'付',p:425},{n:'素六菜碗(紙碗)',u:'付',p:250},
+    {n:'素六菜碗(瓷碗)',u:'付',p:425},{n:'素盤',u:'盤',p:250},
+    {n:'四果',u:'份',p:400},{n:'水果塔',u:'盤',p:350},
+    {n:'綜合水果',u:'盤',p:180},{n:'大發糕+大蛋糕',u:'組',p:300},
+    {n:'大蛋糕',u:'個',p:150},{n:'小發糕',u:'個',p:40},
+    {n:'紅圓',u:'個',p:40},{n:'紅龜',u:'個',p:40},
+    {n:'湯圓三碗',u:'份',p:90},{n:'冥財箱',u:'份',p:250},
+    {n:'功德紙錢(三色金)',u:'份',p:150},{n:'蓮花九朵',u:'串',p:170},
+    {n:'瓶花',u:'對',p:250},{n:'米飯',u:'鍋',p:200},
+    {n:'茶',u:'瓶',p:25},{n:'酒',u:'瓶',p:50},
+    {n:'水',u:'瓶',p:10},{n:'飯',u:'碗',p:10},
+    {n:'米',u:'包',p:200},{n:'瓶水',u:'箱',p:120},
+    {n:'六菜湯飯組',u:'付',p:1600},
   ],
   '烹廚祭品':[
-     {n:'大五牲',u:'付',p:1800},{n:'外家大五牲',u:'付',p:1800},
-    {n:'素大五牲',u:'付',p:1200},{n:'素外家大五牲',u:'付',p:1200},
-    {n:'葷三牲',u:'付',p:900},{n:'素三牲',u:'付',p:700},
-    {n:'素三盤',u:'付',p:700},{n:'生小三牲',u:'付',p:150},
-    {n:'葷十二菜碗(紙碗)',u:'付',p:400},{n:'葷十二菜碗(瓷碗)',u:'付',p:750},
-    {n:'素十二菜碗(紙碗)',u:'付',p:400},{n:'素十二菜碗(瓷碗)',u:'付',p:750},
-    {n:'葷六菜碗(紙碗)',u:'付',p:250},{n:'葷六菜碗(瓷碗)',u:'付',p:425},
-    {n:'素六菜碗(紙碗)',u:'付',p:250},{n:'素六菜碗(瓷碗)',u:'付',p:425},
-    {n:'素盤',u:'盤',p:250},{n:'四果',u:'份',p:400},
-    {n:'水果塔',u:'盤',p:350},{n:'綜合水果',u:'盤',p:180},
-    {n:'大發糕+大蛋糕',u:'組',p:300},{n:'大蛋糕',u:'個',p:150},
-    {n:'小發糕',u:'個',p:40},{n:'紅圓',u:'個',p:40},
-    {n:'紅龜',u:'個',p:40},{n:'湯圓三碗',u:'份',p:90},
-    {n:'冥財箱',u:'份',p:250},{n:'功德紙錢(三色金)',u:'份',p:150},
-    {n:'蓮花九朵',u:'串',p:170},{n:'瓶花',u:'對',p:250},
-    {n:'米飯',u:'鍋',p:200},{n:'茶',u:'瓶',p:25},
-    {n:'酒',u:'瓶',p:50},{n:'水',u:'瓶',p:10},
-    {n:'飯',u:'碗',p:10},{n:'湯匙',u:'支',p:50},
-    {n:'飯匙',u:'支',p:50},{n:'米',u:'包',p:200},
-    {n:'瓶水',u:'箱',p:120},{n:'六菜湯飯組',u:'付',p:1600},
+    {n:'辦桌全席(10人桌)',u:'桌',p:0},{n:'半桌菜(5人份)',u:'桌',p:0},
+    {n:'滷肉飯便當',u:'個',p:0},{n:'素食便當',u:'個',p:0},
+    {n:'麵條(大鍋)',u:'鍋',p:0},{n:'米粉湯(大鍋)',u:'鍋',p:0},
+    {n:'白斬雞',u:'隻',p:0},{n:'控肉',u:'份',p:0},
+  ],
+  '法事':[
+    {n:'做功德(一日)',u:'場',p:0},{n:'做功德(二日)',u:'場',p:0},
+    {n:'頭七法事',u:'場',p:0},{n:'二七法事',u:'場',p:0},
+    {n:'三七法事',u:'場',p:0},{n:'滿七法事',u:'場',p:0},
+    {n:'百日法事',u:'場',p:0},{n:'對年法事',u:'場',p:0},
+    {n:'燒庫錢',u:'場',p:0},{n:'誦經(一堂)',u:'堂',p:0},
+    {n:'普渡法事',u:'場',p:0},{n:'超渡牌位',u:'份',p:0},
+    {n:'出殯儀式',u:'場',p:0},{n:'安神位',u:'次',p:0},
+  ],
+  '今榮租車':[
+    {n:'靈車(一般)',u:'趟',p:0},{n:'靈車(長程)',u:'趟',p:0},
+    {n:'禮車(家屬)',u:'輛',p:0},{n:'遊覽車',u:'輛',p:0},
+    {n:'冷凍車',u:'天',p:0},{n:'停車費',u:'次',p:0},
+    {n:'高速公路過路費',u:'次',p:0},
   ],
 };
 
 // ════════════════════════════════════════════
-// 資料結構
-// cases: [{id, name, date, month, note, paid, expenses:[{id,vendor,label,amount,date,note,items:[]}]}]
+// 資料存取（localStorage 模擬雲端）
+// 改成真正雲端：把 loadDB/saveDB 換成 fetch API 即可
 // ════════════════════════════════════════════
-let cases = [];
-let activeCaseId = null; // 正在新增費用的案件
-let expSelectedItems = []; // 費用modal暫存品項
-let statsMonth = 'all';
-let caseMonth = 'all';
+const DB_KEY = 'jipin_db_v3';
+const USERS_KEY = 'jipin_users_v3';
 
-function loadData(){try{cases=JSON.parse(localStorage.getItem('jipin_cases')||'[]');}catch(e){cases=[];}}
-function saveData(){localStorage.setItem('jipin_cases',JSON.stringify(cases));}
+function loadDB(){ try{return JSON.parse(localStorage.getItem(DB_KEY)||'[]');}catch(e){return[];} }
+function saveDB(d){ localStorage.setItem(DB_KEY,JSON.stringify(d)); }
+function loadUsers(){
+  const def=[
+    {id:1,name:'老闆',username:'admin',password:'boss1234',role:'admin'},
+    {id:2,name:'員工一',username:'staff1',password:'staff123',role:'staff'},
+  ];
+  try{const u=JSON.parse(localStorage.getItem(USERS_KEY));return u&&u.length?u:def;}catch(e){return def;}
+}
+function saveUsers(u){ localStorage.setItem(USERS_KEY,JSON.stringify(u)); }
+
+// ════════════════════════════════════════════
+// 狀態
+// ════════════════════════════════════════════
+let currentUser = null;
+let cases = [];
+let users = [];
+let activeCaseId = null;
+let expSelItems = [];
+let caseMonth = 'all';
+let statsMonth = 'all';
 
 function init(){
-  loadData();
-  const t=new Date();
-  document.getElementById('nc-date').value=t.toISOString().split('T')[0];
-  document.getElementById('nc-month').value=t.toISOString().substring(0,7);
-  document.getElementById('exp-date').value=t.toISOString().split('T')[0];
+  users = loadUsers();
+  // 記住登入
+  const saved = sessionStorage.getItem('jipin_session');
+  if(saved){
+    const u=users.find(x=>x.id===parseInt(saved));
+    if(u){loginAs(u);return;}
+  }
+  document.getElementById('loginScreen').style.display='flex';
+}
+
+// ════════════════════════════════════════════
+// 登入
+// ════════════════════════════════════════════
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  const found=users.find(x=>x.username===u&&x.password===p);
+  if(!found){document.getElementById('loginErr').textContent='帳號或密碼錯誤';return;}
+  document.getElementById('loginErr').textContent='';
+  loginAs(found);
+}
+
+function loginAs(user){
+  currentUser=user;
+  sessionStorage.setItem('jipin_session',user.id);
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appScreen').style.display='block';
+  document.getElementById('headerName').textContent=user.name;
+  const rb=document.getElementById('headerRole');
+  rb.textContent=user.role==='admin'?'老闆':'員工';
+  rb.className='role-badge '+(user.role==='admin'?'role-admin':'role-staff');
+  if(user.role==='admin')document.getElementById('adminNavBtn').style.display='';
+  loadAndRender();
+}
+
+function doLogout(){
+  sessionStorage.removeItem('jipin_session');
+  currentUser=null;
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+}
+
+function loadAndRender(){
+  cases=loadDB();
+  setSyncBar('✓ 資料已載入',true);
   renderCases();
   renderStats();
+  if(currentUser.role==='admin')renderUserList();
+}
+
+function setSyncBar(msg,ok){
+  const b=document.getElementById('syncBar');
+  b.textContent=msg;
+  b.style.color=ok?'var(--green)':'var(--text2)';
 }
 
 // ════════════════════════════════════════════
@@ -373,6 +511,7 @@ function openNewCase(){
   const t=new Date();
   document.getElementById('nc-name').value='';
   document.getElementById('nc-note').value='';
+  document.getElementById('nc-staff').value=currentUser.name;
   document.getElementById('nc-date').value=t.toISOString().split('T')[0];
   document.getElementById('nc-month').value=t.toISOString().substring(0,7);
   openModal('modalNewCase');
@@ -382,65 +521,55 @@ function saveNewCase(){
   const name=document.getElementById('nc-name').value.trim();
   if(!name){showToast('請輸入亡者姓名');return;}
   const c={
-    id:Date.now(),
-    name,
+    id:Date.now(),name,
     date:document.getElementById('nc-date').value,
     month:document.getElementById('nc-month').value,
+    staff:document.getElementById('nc-staff').value.trim()||currentUser.name,
     note:document.getElementById('nc-note').value.trim(),
-    paid:false,
-    expenses:[]
+    paid:false,expenses:[],
+    createdBy:currentUser.name,
+    createdAt:new Date().toISOString()
   };
-  cases.unshift(c);
-  saveData();
+  cases.unshift(c);saveDB(cases);
   closeModal('modalNewCase');
   showToast('✓ 案件已建立');
-  renderCases();
-  renderStats();
+  setSyncBar('✓ 已同步',true);
+  renderCases();renderStats();
 }
 
 // ════════════════════════════════════════════
-// 新增費用
+// 費用
 // ════════════════════════════════════════════
-function openAddExpense(caseId){
-  activeCaseId=caseId;
-  expSelectedItems=[];
+function openAddExp(caseId){
+  activeCaseId=caseId;expSelItems=[];
   const c=cases.find(x=>x.id===caseId);
-  document.getElementById('expModalTitle').innerHTML=`<span style="color:var(--gold-light);font-size:14px;">${c.name}</span> 新增費用 <button class="modal-close" onclick="closeModal('modalAddExpense')">✕</button>`;
-  document.getElementById('exp-vendor').value='';
-  document.getElementById('exp-label').value='';
-  document.getElementById('exp-amount').value='';
-  document.getElementById('exp-note').value='';
-  document.getElementById('exp-search').value='';
+  document.getElementById('expModalTitle').innerHTML=
+    `<span style="color:var(--gold-light);font-size:13px;">${c.name}</span>　新增費用
+     <button class="modal-close" onclick="closeModal('modalAddExp')">✕</button>`;
+  ['exp-vendor','exp-label','exp-amount','exp-note','exp-search','exp-cname','exp-cprice'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('exp-date').value=new Date().toISOString().split('T')[0];
   document.getElementById('exp-item-section').style.display='none';
   document.getElementById('exp-item-grid').innerHTML='';
-  document.getElementById('exp-selected-block').innerHTML='';
-  document.getElementById('exp-custom-name').value='';
-  document.getElementById('exp-custom-price').value='';
-  openModal('modalAddExpense');
+  document.getElementById('exp-sel-block').innerHTML='';
+  openModal('modalAddExp');
 }
 
 function onExpVendorChange(){
-  expSelectedItems=[];
+  expSelItems=[];
   const v=document.getElementById('exp-vendor').value;
   document.getElementById('exp-search').value='';
-  if(v&&VENDOR_ITEMS[v]){
-    document.getElementById('exp-item-section').style.display='block';
-    renderExpItems();
-  } else {
-    document.getElementById('exp-item-section').style.display='none';
-  }
-  renderExpSelected();
-  recalcExp();
+  document.getElementById('exp-item-section').style.display=v?'block':'none';
+  if(v)renderExpItems();
+  renderExpSel();recalcExp();
 }
 
 function renderExpItems(){
   const v=document.getElementById('exp-vendor').value;
-  const q=document.getElementById('exp-search').value.toLowerCase();
+  const q=document.getElementById('exp-search').value;
   const items=(VENDOR_ITEMS[v]||[]).filter(it=>!q||it.n.includes(q));
-  document.getElementById('exp-item-grid').innerHTML=items.map((it,idx)=>{
+  document.getElementById('exp-item-grid').innerHTML=items.map((it,_)=>{
     const gi=(VENDOR_ITEMS[v]||[]).findIndex(x=>x.n===it.n);
-    const sel=expSelectedItems.find(s=>s.name===it.n);
+    const sel=expSelItems.find(s=>s.name===it.n&&!s.custom);
     return `<button class="item-btn ${sel?'sel':''}" onclick="toggleExpItem(${gi})">
       <span class="iname">${it.n}</span>
       <span class="iprice">${it.u}${it.p>0?' $'+it.p:' (另計)'}</span>
@@ -450,101 +579,86 @@ function renderExpItems(){
 
 function toggleExpItem(i){
   const v=document.getElementById('exp-vendor').value;
-  const it=(VENDOR_ITEMS[v]||[])[i];
-  if(!it)return;
-  const idx=expSelectedItems.findIndex(s=>s.name===it.n&&!s.custom);
-  if(idx>=0)expSelectedItems.splice(idx,1);
-  else expSelectedItems.push({name:it.n,price:it.p,qty:1,unit:it.u,custom:false});
-  renderExpItems();
-  renderExpSelected();
-  recalcExp();
+  const it=(VENDOR_ITEMS[v]||[])[i];if(!it)return;
+  const idx=expSelItems.findIndex(s=>s.name===it.n&&!s.custom);
+  if(idx>=0)expSelItems.splice(idx,1);
+  else expSelItems.push({name:it.n,price:it.p,qty:1,unit:it.u,custom:false});
+  renderExpItems();renderExpSel();recalcExp();
 }
 
-function addExpCustomItem(){
-  const name=document.getElementById('exp-custom-name').value.trim();
-  const price=parseFloat(document.getElementById('exp-custom-price').value)||0;
+function addExpCustom(){
+  const name=document.getElementById('exp-cname').value.trim();
+  const price=parseFloat(document.getElementById('exp-cprice').value)||0;
   if(!name){showToast('請輸入品項名稱');return;}
-  expSelectedItems.push({name,price,qty:1,unit:'',custom:true});
-  document.getElementById('exp-custom-name').value='';
-  document.getElementById('exp-custom-price').value='';
-  renderExpSelected();
-  recalcExp();
+  expSelItems.push({name,price,qty:1,unit:'',custom:true});
+  document.getElementById('exp-cname').value='';
+  document.getElementById('exp-cprice').value='';
+  renderExpSel();recalcExp();
 }
 
 function removeExpItem(i){
-  const it=expSelectedItems[i];
-  expSelectedItems.splice(i,1);
+  const it=expSelItems[i];expSelItems.splice(i,1);
   if(!it.custom)renderExpItems();
-  renderExpSelected();
-  recalcExp();
+  renderExpSel();recalcExp();
 }
 
-function changeExpQty(i,v){
-  expSelectedItems[i].qty=Math.max(1,parseInt(v)||1);
-  recalcExp();
-}
+function changeExpQty(i,v){expSelItems[i].qty=Math.max(1,parseInt(v)||1);recalcExp();}
 
-function renderExpSelected(){
-  const div=document.getElementById('exp-selected-block');
-  if(expSelectedItems.length===0){div.innerHTML='';return;}
-  div.innerHTML=`<div class="divider"></div>`+expSelectedItems.map((s,i)=>`
+function renderExpSel(){
+  const div=document.getElementById('exp-sel-block');
+  if(!expSelItems.length){div.innerHTML='';return;}
+  div.innerHTML=`<div class="divider"></div>`+expSelItems.map((s,i)=>`
     <div class="sel-item-row">
       <span class="sel-item-name">${s.name}</span>
-      <div class="sel-item-qty">
-        <span>數量</span>
+      <div class="sel-qty"><span>數量</span>
         <input type="number" value="${s.qty}" min="1" oninput="changeExpQty(${i},this.value)">
       </div>
-      <span class="sel-item-price">${s.price>0?'$'+(s.price*s.qty):'-'}</span>
+      <span class="sel-price">${s.price>0?'$'+(s.price*s.qty):'-'}</span>
       <button class="sel-remove" onclick="removeExpItem(${i})">✕</button>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function recalcExp(){
-  const total=expSelectedItems.reduce((s,it)=>s+(it.price*it.qty),0);
-  if(total>0)document.getElementById('exp-amount').value=total;
+  const t=expSelItems.reduce((s,it)=>s+(it.price*it.qty),0);
+  if(t>0)document.getElementById('exp-amount').value=t;
 }
 
 function saveExpense(){
-  if(!activeCaseId){return;}
+  if(!activeCaseId)return;
   const vendor=document.getElementById('exp-vendor').value;
   const label=document.getElementById('exp-label').value.trim();
   const amount=parseFloat(document.getElementById('exp-amount').value)||0;
   const date=document.getElementById('exp-date').value;
   const note=document.getElementById('exp-note').value.trim();
   if(!vendor){showToast('請選擇廠商');return;}
-  if(!label&&expSelectedItems.length===0){showToast('請輸入費用說明或選擇品項');return;}
-  if(amount===0&&expSelectedItems.length===0){showToast('請輸入金額');return;}
-
-  const c=cases.find(x=>x.id===activeCaseId);
-  if(!c)return;
+  if(!label&&!expSelItems.length){showToast('請輸入費用說明或選擇品項');return;}
+  if(!amount&&!expSelItems.length){showToast('請輸入金額');return;}
+  const c=cases.find(x=>x.id===activeCaseId);if(!c)return;
   c.expenses.push({
     id:Date.now(),vendor,
-    label:label||(expSelectedItems.map(s=>s.name).join('、')),
-    amount,date,note,
-    items:[...expSelectedItems]
+    label:label||(expSelItems.map(s=>s.name).join('、')),
+    amount,date,note,items:[...expSelItems],
+    addedBy:currentUser.name
   });
-  saveData();
-  closeModal('modalAddExpense');
-  showToast('✓ 費用已新增');
-  renderCases();
-  renderStats();
+  saveDB(cases);closeModal('modalAddExp');
+  showToast('✓ 費用已新增');setSyncBar('✓ 已同步',true);
+  renderCases();renderStats();
 }
 
 function deleteExpense(caseId,expId){
-  const c=cases.find(x=>x.id===caseId);
-  if(!c)return;
+  if(currentUser.role!=='admin'){showToast('⚠️ 僅老闆可刪除');return;}
+  const c=cases.find(x=>x.id===caseId);if(!c)return;
   c.expenses=c.expenses.filter(e=>e.id!==expId);
-  saveData();renderCases();renderStats();
+  saveDB(cases);showToast('已刪除');renderCases();renderStats();
 }
 
 // ════════════════════════════════════════════
-// 案件列表
+// 渲染案件
 // ════════════════════════════════════════════
 function renderCases(){
   const months=[...new Set(cases.map(c=>c.month))].sort().reverse();
-  const mf=document.getElementById('caseMonthFilter');
-  mf.innerHTML=`<button class="filter-btn ${caseMonth==='all'?'active':''}" onclick="setCaseMonth('all')">全部</button>`
+  document.getElementById('caseMonthFilter').innerHTML=
+    `<button class="filter-btn ${caseMonth==='all'?'active':''}" onclick="setCaseMonth('all')">全部</button>`
     +months.map(m=>`<button class="filter-btn ${caseMonth===m?'active':''}" onclick="setCaseMonth('${m}')">${m.replace('-','年')}月</button>`).join('');
 
   const q=document.getElementById('searchCase').value.trim();
@@ -555,7 +669,7 @@ function renderCases(){
   if(fs!=='')filtered=filtered.filter(c=>c.paid===(fs==='1'));
 
   const list=document.getElementById('caseList');
-  if(filtered.length===0){list.innerHTML=`<div class="empty"><div class="icon">🕯️</div>尚無案件</div>`;return;}
+  if(!filtered.length){list.innerHTML=`<div class="empty"><div class="icon">🕯️</div>尚無案件</div>`;return;}
   list.innerHTML=filtered.map(c=>renderCaseCard(c)).join('');
 }
 
@@ -564,81 +678,76 @@ function setCaseMonth(m){caseMonth=m;renderCases();}
 function renderCaseCard(c){
   const total=c.expenses.reduce((s,e)=>s+e.amount,0);
   const vendors=[...new Set(c.expenses.map(e=>e.vendor))];
-  // 依廠商分組費用
-  const vendorGroups={};
-  c.expenses.forEach(e=>{
-    if(!vendorGroups[e.vendor])vendorGroups[e.vendor]=[];
-    vendorGroups[e.vendor].push(e);
-  });
+  const vGroups={};
+  c.expenses.forEach(e=>{if(!vGroups[e.vendor])vGroups[e.vendor]=[];vGroups[e.vendor].push(e);});
 
-  const expandContent=Object.entries(vendorGroups).map(([vname,exps])=>{
-    const vsub=exps.reduce((s,e)=>s+e.amount,0);
+  const isAdmin=currentUser.role==='admin';
+  const expand=Object.entries(vGroups).map(([vname,exps])=>{
+    const vs=exps.reduce((s,e)=>s+e.amount,0);
     return `<div class="vendor-block">
-      <div class="vendor-block-header">
+      <div class="vendor-block-hd">
         <span class="chip chip-${vname}">${vname}</span>
-        <span style="font-size:13px;color:var(--text2)">小計 <strong style="color:var(--text)">$${vsub.toLocaleString()}</strong></span>
+        <span style="font-size:12px;color:var(--text2);">小計 <strong style="color:var(--text)">$${vs.toLocaleString()}</strong></span>
       </div>
-      <div class="vendor-block-items">
-        ${exps.map(e=>`
-          <div class="item-line">
-            <div style="flex:1;">
-              <div class="item-line-name">${e.label}</div>
-              ${e.items&&e.items.length>0?`<div style="font-size:11px;color:var(--text2);margin-top:2px;">${e.items.map(it=>`${it.name}×${it.qty}`).join('　')}</div>`:''}
-              ${e.note?`<div class="note-line">${e.note}</div>`:''}
-              <div style="font-size:11px;color:var(--text3);margin-top:1px;">${e.date}</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span class="item-line-price">${e.amount>0?'$'+e.amount.toLocaleString():'-'}</span>
-              <button class="btn-sm danger" onclick="event.stopPropagation();deleteExpense(${c.id},${e.id})">刪</button>
-            </div>
+      <div class="vendor-items-box">
+        ${exps.map(e=>`<div class="exp-line">
+          <div class="exp-line-info">
+            <div class="exp-line-name">${e.label}</div>
+            ${e.items&&e.items.length?`<div class="exp-line-detail">${e.items.map(it=>`${it.name}×${it.qty}`).join('　')}</div>`:''}
+            ${e.note?`<div class="exp-line-note">${e.note}</div>`:''}
+            <div class="exp-line-date">${e.date}　${e.addedBy||''}</div>
           </div>
-        `).join('')}
+          <div style="display:flex;align-items:center;gap:7px;">
+            <span class="exp-line-price">${e.amount>0?'$'+e.amount.toLocaleString():'-'}</span>
+            ${isAdmin?`<button class="btn-sm danger" onclick="event.stopPropagation();deleteExpense(${c.id},${e.id})">刪</button>`:''}
+          </div>
+        </div>`).join('')}
       </div>
+      <div class="vendor-sub-total">小計<strong>$${vs.toLocaleString()}</strong></div>
     </div>`;
-  }).join('');
+  }).join('')||`<div style="color:var(--text2);font-size:13px;text-align:center;padding:12px 0;">尚無費用</div>`;
 
   return `<div class="case-card">
     <div onclick="toggleExpand(${c.id})">
-      <div class="case-header">
+      <div class="case-head">
         <div>
-          <div class="case-name">${c.name} ${c.paid?'<span class="badge-paid">已結清</span>':'<span class="badge-unpaid">未結清</span>'}</div>
-          <div class="case-meta">${c.date||''} ${c.note?'・'+c.note:''}</div>
+          <div class="case-name">${c.name}
+            ${c.paid?'<span class="badge-paid">已結清</span>':'<span class="badge-unpaid">未結清</span>'}
+          </div>
+          <div class="case-meta">${c.date||''}${c.staff?'　承辦：'+c.staff:''}${c.note?'　'+c.note:''}</div>
         </div>
-        <div class="case-total">
-          <div class="case-total-num">$${total.toLocaleString()}</div>
-          <div class="case-total-sub">${c.expenses.length}筆費用 ▾</div>
+        <div class="case-right">
+          <div class="case-total">$${total.toLocaleString()}</div>
+          <div class="case-sub">${c.expenses.length}筆 ▾</div>
         </div>
       </div>
       <div class="case-chips">
         ${vendors.map(v=>`<span class="chip chip-${v}">${v}</span>`).join('')}
-        ${vendors.length===0?'<span style="font-size:12px;color:var(--text3);">尚無費用</span>':''}
+        ${!vendors.length?'<span style="font-size:12px;color:var(--text3);">尚無費用</span>':''}
       </div>
     </div>
     <div class="case-expand" id="expand-${c.id}">
-      ${expandContent||'<div style="color:var(--text2);font-size:13px;text-align:center;padding:10px 0;">尚無費用記錄</div>'}
+      ${expand}
       <div class="action-row">
-        <button class="btn-sm primary" onclick="openAddExpense(${c.id})">＋ 新增費用</button>
-        <button class="btn-sm success" onclick="toggleCasePaid(${c.id})">${c.paid?'取消結清':'標記已結清'}</button>
-        <button class="btn-sm danger" onclick="deleteCase(${c.id})">刪除案件</button>
+        <button class="btn-sm primary" onclick="openAddExp(${c.id})">＋ 新增費用</button>
+        ${isAdmin?`<button class="btn-sm success" onclick="togglePaid(${c.id})">${c.paid?'取消結清':'標記已結清'}</button>`:''}
+        ${isAdmin?`<button class="btn-sm danger" onclick="deleteCase(${c.id})">刪除案件</button>`:''}
       </div>
     </div>
   </div>`;
 }
 
-function toggleExpand(id){
-  const el=document.getElementById('expand-'+id);
-  el.classList.toggle('open');
-}
+function toggleExpand(id){document.getElementById('expand-'+id).classList.toggle('open');}
 
-function toggleCasePaid(id){
-  const c=cases.find(x=>x.id===id);
-  if(c){c.paid=!c.paid;saveData();renderCases();renderStats();}
+function togglePaid(id){
+  if(currentUser.role!=='admin'){showToast('⚠️ 僅老闆可操作');return;}
+  const c=cases.find(x=>x.id===id);if(c){c.paid=!c.paid;saveDB(cases);renderCases();renderStats();}
 }
 
 function deleteCase(id){
-  if(!confirm('確定刪除此案件及所有費用？'))return;
-  cases=cases.filter(c=>c.id!==id);
-  saveData();renderCases();renderStats();
+  if(currentUser.role!=='admin'){showToast('⚠️ 僅老闆可刪除');return;}
+  if(!confirm('確定刪除此案件？'))return;
+  cases=cases.filter(c=>c.id!==id);saveDB(cases);renderCases();renderStats();showToast('已刪除');
 }
 
 // ════════════════════════════════════════════
@@ -646,59 +755,112 @@ function deleteCase(id){
 // ════════════════════════════════════════════
 function renderStats(){
   const months=[...new Set(cases.map(c=>c.month))].sort().reverse();
-  const mf=document.getElementById('statsMonthFilter');
-  mf.innerHTML=`<button class="filter-btn ${statsMonth==='all'?'active':''}" onclick="setStatsMonth('all')">全部</button>`
+  document.getElementById('statsMonthFilter').innerHTML=
+    `<button class="filter-btn ${statsMonth==='all'?'active':''}" onclick="setStatsMonth('all')">全部</button>`
     +months.map(m=>`<button class="filter-btn ${statsMonth===m?'active':''}" onclick="setStatsMonth('${m}')">${m.replace('-','年')}月</button>`).join('');
 
-  let filtered=statsMonth==='all'?cases:cases.filter(c=>c.month===statsMonth);
-  const allExp=filtered.flatMap(c=>c.expenses);
+  const fc=statsMonth==='all'?cases:cases.filter(c=>c.month===statsMonth);
+  const allExp=fc.flatMap(c=>c.expenses);
   const total=allExp.reduce((s,e)=>s+e.amount,0);
-  const unpaidTotal=filtered.filter(c=>!c.paid).flatMap(c=>c.expenses).reduce((s,e)=>s+e.amount,0);
+  const unpaid=fc.filter(c=>!c.paid).flatMap(c=>c.expenses).reduce((s,e)=>s+e.amount,0);
 
   document.getElementById('statGrid').innerHTML=`
     <div class="stat-box"><div class="stat-num">$${total.toLocaleString()}</div><div class="stat-label">總金額</div></div>
-    <div class="stat-box"><div class="stat-num" style="color:var(--red)">$${unpaidTotal.toLocaleString()}</div><div class="stat-label">未結清</div></div>
-    <div class="stat-box"><div class="stat-num">${filtered.length}</div><div class="stat-label">案件數</div></div>
-    <div class="stat-box"><div class="stat-num">${allExp.length}</div><div class="stat-label">費用筆數</div></div>
-  `;
+    <div class="stat-box"><div class="stat-num" style="color:var(--red)">$${unpaid.toLocaleString()}</div><div class="stat-label">未結清</div></div>
+    <div class="stat-box"><div class="stat-num">${fc.length}</div><div class="stat-label">案件數</div></div>
+    <div class="stat-box"><div class="stat-num">${allExp.length}</div><div class="stat-label">費用筆數</div></div>`;
 
-  // 廠商統計
   const vMap={};
-  allExp.forEach(e=>{
-    if(!vMap[e.vendor])vMap[e.vendor]={total:0,count:0};
-    vMap[e.vendor].total+=e.amount;vMap[e.vendor].count++;
-  });
+  allExp.forEach(e=>{if(!vMap[e.vendor])vMap[e.vendor]={t:0,n:0};vMap[e.vendor].t+=e.amount;vMap[e.vendor].n++;});
   document.getElementById('vendorStats').innerHTML=Object.entries(vMap)
-    .sort((a,b)=>b[1].total-a[1].total)
-    .map(([v,d])=>`<div class="summary-row">
-      <div class="summary-name"><span class="chip chip-${v}">${v}</span></div>
-      <div class="summary-right">
-        <div class="summary-amount">$${d.total.toLocaleString()}</div>
-        <div class="summary-sub">${d.count}筆</div>
-      </div>
-    </div>`).join('')||'<div style="color:var(--text2);font-size:13px;padding:10px 0;text-align:center;">尚無資料</div>';
+    .sort((a,b)=>b[1].t-a[1].t)
+    .map(([v,d])=>`<div class="sum-row">
+      <div><span class="chip chip-${v}">${v}</span></div>
+      <div style="text-align:right"><div class="sum-amount">$${d.t.toLocaleString()}</div><div class="sum-sub">${d.n}筆</div></div>
+    </div>`).join('')||'<div class="empty" style="padding:20px;">尚無資料</div>';
 
-  // 月份統計
   const mMap={};
   cases.forEach(c=>{
     const m=c.month||'未知';
-    if(!mMap[m])mMap[m]={total:0,unpaid:0,count:0};
+    if(!mMap[m])mMap[m]={t:0,u:0,n:0};
     const ct=c.expenses.reduce((s,e)=>s+e.amount,0);
-    mMap[m].total+=ct;mMap[m].count++;
-    if(!c.paid)mMap[m].unpaid+=ct;
+    mMap[m].t+=ct;mMap[m].n++;
+    if(!c.paid)mMap[m].u+=ct;
   });
   document.getElementById('monthStats').innerHTML=Object.entries(mMap)
     .sort((a,b)=>b[0].localeCompare(a[0]))
-    .map(([m,d])=>`<div class="summary-row">
-      <div>
-        <div class="summary-name">${m.replace('-','年')}月</div>
-        <div class="summary-sub">${d.count}件　未結清 $${d.unpaid.toLocaleString()}</div>
-      </div>
-      <div class="summary-amount">$${d.total.toLocaleString()}</div>
-    </div>`).join('')||'<div style="color:var(--text2);font-size:13px;padding:10px 0;text-align:center;">尚無資料</div>';
+    .map(([m,d])=>`<div class="sum-row">
+      <div><div style="font-size:14px;">${m.replace('-','年')}月</div><div class="sum-sub">${d.n}件　未結清 $${d.u.toLocaleString()}</div></div>
+      <div class="sum-amount">$${d.t.toLocaleString()}</div>
+    </div>`).join('')||'<div class="empty" style="padding:20px;">尚無資料</div>';
 }
 
 function setStatsMonth(m){statsMonth=m;renderStats();}
+
+// ════════════════════════════════════════════
+// 帳號管理（老闆）
+// ════════════════════════════════════════════
+function renderUserList(){
+  document.getElementById('userList').innerHTML=users.map(u=>`
+    <div class="user-row">
+      <div>
+        <div style="font-size:14px;">${u.name}</div>
+        <div style="font-size:11px;color:var(--text2);">@${u.username}　${u.role==='admin'?'老闆':'員工'}</div>
+      </div>
+      ${u.id!==currentUser.id?`<button class="btn-sm danger" onclick="deleteUser(${u.id})">刪除</button>`:'<span style="font-size:11px;color:var(--text3);">（本人）</span>'}
+    </div>`).join('');
+}
+
+function openAddUser(){
+  ['nu-name','nu-user','nu-pass'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('nu-role').value='staff';
+  openModal('modalAddUser');
+}
+
+function saveNewUser(){
+  const name=document.getElementById('nu-name').value.trim();
+  const username=document.getElementById('nu-user').value.trim();
+  const password=document.getElementById('nu-pass').value;
+  const role=document.getElementById('nu-role').value;
+  if(!name||!username||!password){showToast('請填寫完整');return;}
+  if(password.length<6){showToast('密碼至少6位');return;}
+  if(users.find(u=>u.username===username)){showToast('帳號已存在');return;}
+  users.push({id:Date.now(),name,username,password,role});
+  saveUsers(users);closeModal('modalAddUser');
+  showToast('✓ 帳號已建立');renderUserList();
+}
+
+function deleteUser(id){
+  if(!confirm('確定刪除此帳號？'))return;
+  users=users.filter(u=>u.id!==id);saveUsers(users);renderUserList();showToast('已刪除');
+}
+
+// ════════════════════════════════════════════
+// 備份
+// ════════════════════════════════════════════
+function exportData(){
+  const blob=new Blob([JSON.stringify({cases,users,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`葬儀帳款備份_${new Date().toISOString().substring(0,10)}.json`;
+  a.click();
+}
+
+function importData(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.cases){cases=d.cases;saveDB(cases);}
+      if(d.users){users=d.users;saveUsers(users);}
+      renderCases();renderStats();renderUserList();
+      showToast('✓ 匯入成功');
+    }catch(err){showToast('❌ 檔案格式錯誤');}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
 
 // ════════════════════════════════════════════
 // 工具
@@ -707,8 +869,10 @@ function showPage(p){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav button').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
-  document.querySelectorAll('.nav button')[{cases:0,stats:1}[p]].classList.add('active');
+  const idx={cases:0,stats:1,admin:2}[p];
+  document.querySelectorAll('.nav button')[idx].classList.add('active');
   if(p==='stats')renderStats();
+  if(p==='admin')renderUserList();
 }
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
