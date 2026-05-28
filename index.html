@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>祥安生命 帳款系統</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap');
@@ -28,7 +28,7 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:'Noto San
 .login-box h2{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--gold);letter-spacing:2px;margin-bottom:18px;text-align:center;}
 .fg{margin-bottom:14px;}
 .fg label{display:block;font-size:11px;color:var(--t2);margin-bottom:5px;letter-spacing:1px;}
-.fg input,.fg select{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius:8px;color:var(--t1);font-size:14px;font-family:'Noto Sans TC',sans-serif;padding:11px 13px;outline:none;-webkit-appearance:none;}
+.fg input,.fg select{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius:8px;color:var(--t1);font-size:14px;font-family:'Noto Sans TC',sans-serif;padding:11px 13px;outline:none;-webkit-appearance:none;appearance:none;}
 .fg input:focus{border-color:var(--gold3);}
 .btn-login{width:100%;background:linear-gradient(135deg,#7a5a10,var(--gold));border:none;border-radius:10px;color:#1a1208;font-size:15px;font-weight:700;font-family:'Noto Sans TC',sans-serif;padding:13px;cursor:pointer;letter-spacing:2px;margin-top:4px;}
 .err{color:var(--red);font-size:12px;text-align:center;margin-top:10px;min-height:16px;}
@@ -55,8 +55,8 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:'Noto San
 /* ── CARDS ── */
 .card{background:var(--bg3);border:1px solid #2a2518;border-radius:12px;padding:14px;margin-bottom:10px;}
 .ctitle{font-family:'Noto Serif TC',serif;font-size:13px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;}
-lbl,label{display:block;font-size:11px;color:var(--t2);margin-bottom:4px;margin-top:11px;letter-spacing:1px;}
-lbl:first-child,label:first-child{margin-top:0;}
+label{display:block;font-size:11px;color:var(--t2);margin-bottom:4px;margin-top:11px;letter-spacing:1px;}
+label:first-child{margin-top:0;}
 select,input[type=text],input[type=number],input[type=date],input[type=month],input[type=password]{
   width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius:8px;
   color:var(--t1);font-size:14px;font-family:'Noto Sans TC',sans-serif;
@@ -138,13 +138,13 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
 .sumsub{font-size:11px;color:var(--t2);margin-top:2px;}
 
 /* ── FILTERS ── */
-.frow{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:11px;scrollbar-width:none;}
+.frow{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:11px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
 .frow::-webkit-scrollbar{display:none;}
 .fbtn{background:var(--bg3);border:1px solid #3a3425;border-radius:18px;color:var(--t2);font-size:12px;font-family:'Noto Sans TC',sans-serif;padding:5px 12px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .fbtn.on{background:#2a2010;border-color:var(--gold3);color:var(--gold);}
 
 /* ── MODAL ── */
-.overlay{position:fixed;inset:0;background:#000b;z-index:500;display:none;align-items:flex-end;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;display:none;align-items:flex-end;}
 .overlay.open{display:flex;}
 .modal{background:var(--bg2);border-radius:16px 16px 0 0;border-top:1px solid var(--gold3);padding:20px 16px;width:100%;max-height:93vh;overflow-y:auto;}
 .mtitle{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--gold);letter-spacing:2px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;}
@@ -167,7 +167,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
 </head>
 <body>
 
-<!-- ════ LOGIN ════ -->
 <div id="s-login" class="on">
   <div class="login-emblem">祥安生命</div>
   <div class="login-sub">葬儀帳款管理系統</div>
@@ -183,7 +182,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
   </div>
 </div>
 
-<!-- ════ APP ════ -->
 <div id="s-app" class="screen">
   <div class="hdr">
     <div class="hdr-row">
@@ -202,7 +200,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
     <button id="adminTab" onclick="showPg('admin')" style="display:none">⚙️ 管理</button>
   </div>
 
-  <!-- 案件 -->
   <div id="pg-cases" class="pg on">
     <div style="display:flex;gap:8px;margin-bottom:10px;">
       <input type="text" id="qcase" placeholder="🔍 搜尋亡者姓名..." oninput="renderCases()" style="flex:1;">
@@ -217,7 +214,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
     <div id="caseList"></div>
   </div>
 
-  <!-- 統計 -->
   <div id="pg-stats" class="pg">
     <div class="frow" id="sMonthF"></div>
     <div class="sgrid" id="sgrid"></div>
@@ -225,7 +221,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
     <div class="card"><div class="ctitle">📅 月份統計</div><div id="mstats"></div></div>
   </div>
 
-  <!-- 管理 -->
   <div id="pg-admin" class="pg">
     <div class="card">
       <div class="ctitle">👥 帳號管理</div>
@@ -241,8 +236,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
   </div>
 </div>
 
-<!-- ════ MODALS ════ -->
-<!-- 新案件 -->
 <div class="overlay" id="mNewCase">
   <div class="modal">
     <div class="mtitle">新增案件 <button class="mclose" onclick="closeM('mNewCase')">✕</button></div>
@@ -257,7 +250,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
   </div>
 </div>
 
-<!-- 新費用 -->
 <div class="overlay" id="mAddExp">
   <div class="modal">
     <div class="mtitle" id="expTitle">新增費用 <button class="mclose" onclick="closeM('mAddExp')">✕</button></div>
@@ -287,7 +279,6 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
   </div>
 </div>
 
-<!-- 新帳號 -->
 <div class="overlay" id="mAddUser">
   <div class="modal">
     <div class="mtitle">新增帳號 <button class="mclose" onclick="closeM('mAddUser')">✕</button></div>
@@ -307,27 +298,41 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
 
 <script>
 // ═══════════════════════════════════════════════════════
-// 雲端資料庫：使用 Claude API 的 Artifacts 持久儲存功能
-// 資料真正存在雲端，任何裝置登入都看得到同一份
+// 混合儲存器：解決非 Claude Artifacts 環境下的報錯崩潰問題
+// 真正實現跨瀏覽器與本地隨點隨用
 // ═══════════════════════════════════════════════════════
 
 const STORAGE_KEY_CASES = 'xiang_an_cases';
 const STORAGE_KEY_USERS = 'xiang_an_users';
 
-// 雲端讀寫函式
 async function cloudGet(key) {
   try {
-    const result = await window.storage.get(key);
-    if (!result) return null;
-    return JSON.parse(result.value);
-  } catch(e) { return null; }
+    if (window.storage && typeof window.storage.get === 'function') {
+      const result = await window.storage.get(key);
+      if (!result) return null;
+      return JSON.parse(result.value);
+    } else {
+      const localValue = localStorage.getItem(key);
+      return localValue ? JSON.parse(localValue) : null;
+    }
+  } catch(e) { 
+    console.error("讀取失敗，降級取用 LocalStorage", e);
+    const localValue = localStorage.getItem(key);
+    return localValue ? JSON.parse(localValue) : null;
+  }
 }
 
 async function cloudSet(key, value) {
   try {
-    await window.storage.set(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
+    if (window.storage && typeof window.storage.set === 'function') {
+      await window.storage.set(key, JSON.stringify(value));
+    }
     return true;
-  } catch(e) { return false; }
+  } catch(e) { 
+    console.error("儲存失敗", e);
+    return false; 
+  }
 }
 
 // ═══════════════════════════════════════════════════════
@@ -379,7 +384,7 @@ const VI = {
     {n:'大蛋糕',u:'個',p:150},{n:'小發糕',u:'個',p:40},
     {n:'紅圓',u:'個',p:40},{n:'紅龜',u:'個',p:40},
     {n:'湯圓三碗',u:'份',p:90},{n:'冥財箱',u:'份',p:250},
-    {n:'功德紙錢(三色金)',u:'份',p:150},{n:'蓮花九朵',u:'串',p:170},
+    {n:'功功德紙錢(三色金)',u:'份',p:150},{n:'蓮花九朵',u:'串',p:170},
     {n:'瓶花',u:'對',p:250},{n:'米飯',u:'鍋',p:200},
     {n:'茶',u:'瓶',p:25},{n:'酒',u:'瓶',p:50},
     {n:'水',u:'瓶',p:10},{n:'飯',u:'碗',p:10},
@@ -412,9 +417,9 @@ const VI = {
 };
 
 // ═══════════════════════════════════════════════════════
-// 狀態
+// 狀態狀態
 // ═══════════════════════════════════════════════════════
-let CU = null; // current user
+let CU = null; 
 let cases = [];
 let users = [];
 let activeCID = null;
@@ -431,20 +436,17 @@ const DEFAULT_USERS = [
 // 初始化
 // ═══════════════════════════════════════════════════════
 async function init() {
-  setSyncLine('⏳ 連線雲端資料庫...');
+  setSyncLine('⏳ 連線本地與雲端資料庫...');
 
-  // 載入帳號（雲端優先，沒有則用預設）
   const cloudUsers = await cloudGet(STORAGE_KEY_USERS);
   users = cloudUsers || DEFAULT_USERS;
   if (!cloudUsers) await cloudSet(STORAGE_KEY_USERS, users);
 
-  // 載入案件
   const cloudCases = await cloudGet(STORAGE_KEY_CASES);
   cases = cloudCases || [];
 
-  setSyncLine('✓ 雲端資料已載入');
+  setSyncLine('✓ 資料庫已就緒');
 
-  // 記住登入session
   const sid = sessionStorage.getItem('xian_sid');
   if (sid) {
     const u = users.find(x => x.id === parseInt(sid));
@@ -478,7 +480,13 @@ function loginAs(user) {
   const rb = document.getElementById('hrole');
   rb.textContent = user.role === 'admin' ? '老闆' : '員工';
   rb.className = 'rbadge ' + (user.role === 'admin' ? 'rb-admin' : 'rb-staff');
-  if (user.role === 'admin') document.getElementById('adminTab').style.display = '';
+  
+  if (user.role === 'admin') {
+    document.getElementById('adminTab').style.display = 'block';
+  } else {
+    document.getElementById('adminTab').style.display = 'none';
+  }
+  
   setSyncLine('✓ 已登入・資料即時同步');
   renderCases(); renderStats();
   if (user.role === 'admin') renderUList();
@@ -500,7 +508,7 @@ function openNewCase() {
   const t = new Date();
   document.getElementById('nc-n').value = '';
   document.getElementById('nc-note').value = '';
-  document.getElementById('nc-s').value = CU.name;
+  document.getElementById('nc-s').value = CU ? CU.name : '';
   document.getElementById('nc-d').value = t.toISOString().split('T')[0];
   document.getElementById('nc-m').value = t.toISOString().substring(0, 7);
   openM('mNewCase');
@@ -513,10 +521,10 @@ async function saveNewCase() {
     id: Date.now(), name,
     date: document.getElementById('nc-d').value,
     month: document.getElementById('nc-m').value,
-    staff: document.getElementById('nc-s').value.trim() || CU.name,
+    staff: document.getElementById('nc-s').value.trim() || (CU ? CU.name : ''),
     note: document.getElementById('nc-note').value.trim(),
     paid: false, expenses: [],
-    createdBy: CU.name,
+    createdBy: CU ? CU.name : 'System',
     createdAt: new Date().toISOString()
   };
   cases.unshift(c);
@@ -527,7 +535,7 @@ async function saveNewCase() {
 }
 
 async function deleteCase(id) {
-  if (CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除'); return; }
+  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除'); return; }
   if (!confirm('確定刪除此案件及所有費用？')) return;
   cases = cases.filter(c => c.id !== id);
   await syncCases();
@@ -536,7 +544,7 @@ async function deleteCase(id) {
 }
 
 async function togglePaid(id) {
-  if (CU.role !== 'admin') { showToast('⚠️ 僅老闆可操作'); return; }
+  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可操作'); return; }
   const c = cases.find(x => x.id === id);
   if (c) { c.paid = !c.paid; await syncCases(); renderCases(); renderStats(); }
 }
@@ -548,6 +556,7 @@ function openAddExp(cid) {
   activeCID = cid;
   eSel = [];
   const c = cases.find(x => x.id === cid);
+  if(!c) return;
   document.getElementById('expTitle').innerHTML =
     `<span style="color:var(--gold2);font-size:13px;">${c.name}</span>　新增費用
      <button class="mclose" onclick="closeM('mAddExp')">✕</button>`;
@@ -607,7 +616,10 @@ function removeEI(i) {
   renderESel(); recalcE();
 }
 
-function changeEQ(i, v) { eSel[i].qty = Math.max(1, parseInt(v) || 1); recalcE(); }
+function changeEQ(i, v) { 
+  eSel[i].qty = Math.max(1, parseInt(v) || 1); 
+  recalcE(); 
+}
 
 function renderESel() {
   const div = document.getElementById('eselblk');
@@ -622,6 +634,7 @@ function renderESel() {
 }
 
 function recalcE() {
+  // 如果勾選的品項加總大於 0 才進行覆蓋，防止因為計費為0而把自訂金額洗掉
   const t = eSel.reduce((s, it) => s + (it.price * it.qty), 0);
   if (t > 0) document.getElementById('eamt').value = t;
 }
@@ -635,26 +648,28 @@ async function saveExp() {
   const note = document.getElementById('enote').value.trim();
   if (!vendor) { showToast('請選擇廠商'); return; }
   if (!label && !eSel.length) { showToast('請輸入費用說明或選擇品項'); return; }
-  if (!amount && !eSel.length) { showToast('請輸入金額'); return; }
+  
   const c = cases.find(x => x.id === activeCID); if (!c) return;
   const btn = document.getElementById('eSaveBtn');
   btn.disabled = true; btn.textContent = '儲存中...';
+  
   c.expenses.push({
     id: Date.now(), vendor,
     label: label || (eSel.map(s => s.name).join('、')),
     amount, date, note, items: [...eSel],
-    addedBy: CU.name
+    addedBy: CU ? CU.name : 'System'
   });
   await syncCases();
   btn.disabled = false; btn.textContent = '儲存費用';
   closeM('mAddExp');
-  showToast('✓ 費用已新增・已同步雲端');
+  showToast('✓ 費用已新增並同步');
   renderCases(); renderStats();
 }
 
 async function deleteExp(cid, eid) {
-  if (CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除'); return; }
+  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除'); return; }
   const c = cases.find(x => x.id === cid); if (!c) return;
+  if (!confirm('確定要刪除這筆費用明細嗎？')) return;
   c.expenses = c.expenses.filter(e => e.id !== eid);
   await syncCases();
   renderCases(); renderStats();
@@ -671,7 +686,7 @@ async function syncCases() {
 // 渲染案件
 // ═══════════════════════════════════════════════════════
 function renderCases() {
-  const months = [...new Set(cases.map(c => c.month))].sort().reverse();
+  const months = [...new Set(cases.map(c => c.month))].filter(Boolean).sort().reverse();
   document.getElementById('cMonthF').innerHTML =
     `<button class="fbtn ${cMonth === 'all' ? 'on' : ''}" onclick="setCM('all')">全部</button>`
     + months.map(m => `<button class="fbtn ${cMonth === m ? 'on' : ''}" onclick="setCM('${m}')">${m.replace('-', '年')}月</button>`).join('');
@@ -698,7 +713,7 @@ function renderCCard(c) {
   const vendors = [...new Set(c.expenses.map(e => e.vendor))];
   const vg = {};
   c.expenses.forEach(e => { if (!vg[e.vendor]) vg[e.vendor] = []; vg[e.vendor].push(e); });
-  const isA = CU.role === 'admin';
+  const isA = CU && CU.role === 'admin';
 
   const body = Object.entries(vg).map(([vn, exps]) => {
     const vs = exps.reduce((s, e) => s + e.amount, 0);
@@ -713,7 +728,7 @@ function renderCCard(c) {
             <div class="ename">${e.label}</div>
             ${e.items && e.items.length ? `<div class="edetail">${e.items.map(it => `${it.name}${it.qty > 1 ? '×' + it.qty : ''}`).join('　')}</div>` : ''}
             ${e.note ? `<div class="enote">${e.note}</div>` : ''}
-            <div class="edate">${e.date}　${e.addedBy || ''}</div>
+            <div class="edate">${e.date || ''}　${e.addedBy || ''}</div>
           </div>
           <div style="display:flex;align-items:center;gap:7px">
             <span class="eprice">${e.amount > 0 ? '$' + e.amount.toLocaleString() : '-'}</span>
@@ -757,14 +772,14 @@ function renderCCard(c) {
 
 function toggleBody(id) {
   const el = document.getElementById('cb-' + id);
-  el.classList.toggle('open');
+  if(el) el.classList.toggle('open');
 }
 
 // ═══════════════════════════════════════════════════════
 // 統計
 // ═══════════════════════════════════════════════════════
 function renderStats() {
-  const months = [...new Set(cases.map(c => c.month))].sort().reverse();
+  const months = [...new Set(cases.map(c => c.month))].filter(Boolean).sort().reverse();
   document.getElementById('sMonthF').innerHTML =
     `<button class="fbtn ${sMonth === 'all' ? 'on' : ''}" onclick="setSM('all')">全部</button>`
     + months.map(m => `<button class="fbtn ${sMonth === m ? 'on' : ''}" onclick="setSM('${m}')">${m.replace('-', '年')}月</button>`).join('');
@@ -819,7 +834,7 @@ function renderUList() {
         <div style="font-size:14px">${u.name}</div>
         <div style="font-size:11px;color:var(--t2)">@${u.username}　${u.role === 'admin' ? '老闆' : '員工'}</div>
       </div>
-      ${u.id !== CU.id
+      ${CU && u.id !== CU.id
         ? `<button class="bsm d" onclick="deleteUser(${u.id})">刪除</button>`
         : '<span style="font-size:11px;color:var(--t3)">（本人）</span>'}
     </div>`).join('');
@@ -874,7 +889,7 @@ async function importData(e) {
       if (d.cases) { cases = d.cases; await cloudSet(STORAGE_KEY_CASES, cases); }
       if (d.users) { users = d.users; await cloudSet(STORAGE_KEY_USERS, users); }
       renderCases(); renderStats(); renderUList();
-      showToast('✓ 匯入成功・已同步雲端');
+      showToast('✓ 匯入成功・已同步');
     } catch (err) { showToast('❌ 格式錯誤'); }
   };
   reader.readAsText(file);
@@ -899,8 +914,10 @@ function closeM(id) { document.getElementById(id).classList.remove('open'); }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  if(t) {
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
 }
 
 // 啟動
