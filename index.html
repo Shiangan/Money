@@ -73,7 +73,7 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
 .bsm{background:none;border:1px solid #3a3425;border-radius:6px;color:var(--t2);font-size:11px;font-family:'Noto Sans TC',sans-serif;padding:4px 9px;cursor:pointer;white-space:nowrap;}
 .bsm.d{border-color:#c0392b44;color:var(--red);}
 .bsm.s{border-color:#27ae6044;color:var(--green);}
-.bsm.p{border-color:var(--gold3);color:var(--gold);}
+.bsm.p{border-colorvar(--gold3);color:var(--gold);}
 .bsm:disabled{opacity:.3;cursor:not-allowed;}
 
 /* ── CHIPS ── */
@@ -163,6 +163,7 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
 @keyframes sp{to{transform:rotate(360deg);}}
 .urow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2a2518;}
 .urow:last-child{border-bottom:none;}
+.pitem-row{display:flex;justify-content:space-between;align-items:center;padding:8px;background:var(--bg4);margin-bottom:5px;border-radius:6px;font-size:13px;}
 </style>
 </head>
 <body>
@@ -223,6 +224,25 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
 
   <div id="pg-admin" class="pg">
     <div class="card">
+      <div class="ctitle">🏢 廠商與品項常駐管理</div>
+      <div class="r2">
+        <div>
+          <label>選擇廠商</label>
+          <select id="adm-v" onchange="renderAdminItems()">
+            <option>明得堂</option><option>無名祭品</option><option>烹廚祭品</option><option>法事</option><option>今榮租車</option>
+          </select>
+        </div>
+        <div>
+          <label>新增常用細項</label>
+          <button class="bsm p" style="width:100%; height:40px; margin-top:4px;" onclick="openAddDbItem()">＋ 新增品項到資料庫</button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size:12px; color:var(--t2); margin-bottom:8px;">該廠商已累積的自訂細項：</div>
+      <div id="admin-item-list" style="max-height:200px; overflow-y:auto;"></div>
+    </div>
+
+    <div class="card">
       <div class="ctitle">👥 帳號管理</div>
       <div id="ulist"></div>
       <button class="bghost" style="margin-top:12px;width:100%;" onclick="openAddUser()">＋ 新增帳號</button>
@@ -233,6 +253,23 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
       <button class="bghost" style="width:100%;" onclick="document.getElementById('impf').click()">📥 匯入資料</button>
       <input type="file" id="impf" accept=".json" style="display:none;" onchange="importData(event)">
     </div>
+  </div>
+</div>
+
+<div class="overlay" id="mAddDbItem">
+  <div class="modal">
+    <div class="mtitle">累積新細項到品項庫 <button class="mclose" onclick="closeM('mAddDbItem')">✕</button></div>
+    <label>所屬廠商</label>
+    <select id="dbi-v">
+      <option>明得堂</option><option>無名祭品</option><option>烹廚祭品</option><option>法事</option><option>今榮租車</option>
+    </select>
+    <label>品項細項名稱</label>
+    <input type="text" id="dbi-n" placeholder="例：高級斧頭組(皮革套+客製)">
+    <div class="r2">
+      <div><label>單位</label><input type="text" id="dbi-u" placeholder="個、套、包、條"></div>
+      <div><label>常規單價</label><input type="number" id="dbi-p" placeholder="0"></div>
+    </div>
+    <button class="bgold" onclick="saveItemToDb()">確認永久累積</button>
   </div>
 </div>
 
@@ -258,15 +295,15 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
       <option value="">選擇廠商</option>
       <option>明得堂</option><option>無名祭品</option><option>烹廚祭品</option><option>法事</option><option>今榮租車</option>
     </select>
-    <label>費用說明</label>
+    <label>費用說明 (可不填，由下方品項自動帶入)</label>
     <input type="text" id="el" placeholder="例：頭七法事、三牲四果">
     <div id="eItemSec" style="display:none;margin-top:11px;">
-      <div style="font-size:12px;color:var(--t2);margin-bottom:7px;">從品項選擇</div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:7px;">從品項選擇 (包含已累積的項目)</div>
       <div class="isearch"><input type="text" id="esrch" placeholder="搜尋品項..." oninput="renderEItems()"></div>
       <div class="igrid" id="egrid"></div>
       <div id="eselblk"></div>
       <div class="divider"></div>
-      <div style="font-size:12px;color:var(--t2);margin-bottom:7px;">自訂品項</div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:7px;">臨時單次品項</div>
       <div class="r2"><div><input type="text" id="ecn" placeholder="品項名稱"></div><div><input type="number" id="ecp" placeholder="單價"></div></div>
       <button class="bghost" style="margin-top:6px;width:100%;" onclick="addEC()">＋ 加入</button>
     </div>
@@ -297,128 +334,62 @@ textarea{width:100%;background:var(--bg4);border:1px solid #3a3425;border-radius
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-// 混合儲存器：解決非 Claude Artifacts 環境下的報錯崩潰問題
-// 真正實現跨瀏覽器與本地隨點隨用
-// ═══════════════════════════════════════════════════════
-
 const STORAGE_KEY_CASES = 'xiang_an_cases';
 const STORAGE_KEY_USERS = 'xiang_an_users';
-
-async function cloudGet(key) {
-  try {
-    if (window.storage && typeof window.storage.get === 'function') {
-      const result = await window.storage.get(key);
-      if (!result) return null;
-      return JSON.parse(result.value);
-    } else {
-      const localValue = localStorage.getItem(key);
-      return localValue ? JSON.parse(localValue) : null;
-    }
-  } catch(e) { 
-    console.error("讀取失敗，降級取用 LocalStorage", e);
-    const localValue = localStorage.getItem(key);
-    return localValue ? JSON.parse(localValue) : null;
-  }
-}
-
-async function cloudSet(key, value) {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-    if (window.storage && typeof window.storage.set === 'function') {
-      await window.storage.set(key, JSON.stringify(value));
-    }
-    return true;
-  } catch(e) { 
-    console.error("儲存失敗", e);
-    return false; 
-  }
-}
+const STORAGE_KEY_CUSTOM_ITEMS = 'xiang_an_custom_items'; // 新增：自訂細項儲存鍵
 
 // ═══════════════════════════════════════════════════════
-// 品項資料庫
+// 核心內建品項資料庫 (已補齊明得堂最新照片細項)
 // ═══════════════════════════════════════════════════════
-const VI = {
+const BASE_VI = {
   '明得堂':[
-    {n:'九朵蓮花盤',u:'組',p:140},{n:'九色九朵蓮花(3朵1串3串)',u:'組',p:360},
-    {n:'蓮花(3朵一串)(3串9朵)',u:'組',p:180},{n:'蓮花寶塔巨無霸',u:'對',p:1550},
-    {n:'紅迷你108蓮花被',u:'件',p:500},{n:'冥財箱',u:'箱',p:170},
-    {n:'庫錢(萬善堂含清潔費)',u:'包',p:85},{n:'D庫錢(箱)-長程',u:'箱',p:55},
-    {n:'庫錢(東丰火爐含清潔費)',u:'包',p:85},{n:'功德紙錢(三色金)',u:'份',p:150},
-    {n:'明-LN錢箱(NT:1000)',u:'個',p:400},{n:'薄黑長袍4尺',u:'件',p:60},
-    {n:'薄黑長袍4.5尺',u:'件',p:60},{n:'薄黑袍5尺',u:'件',p:60},
-    {n:'薄黑袍2.5尺',u:'件',p:60},{n:'薄黑袍3尺',u:'件',p:60},
-    {n:'男西裝-黑',u:'套',p:650},{n:'男西裝-黑條',u:'套',p:650},
-    {n:'男西裝-灰',u:'套',p:650},{n:'男西裝/5L加大',u:'套',p:1200},
-    {n:'彩色絲衣袱-棗紅金',u:'件',p:700},{n:'彩色絲衣袱-粉',u:'套',p:1200},
-    {n:'彩色絲壽鞋-女',u:'雙',p:150},{n:'希-華麗別墅',u:'間',p:1920},
-    {n:'希-華麗別墅+浪漫花園',u:'組',p:4400},{n:'希-三星手機組',u:'盒',p:450},
-    {n:'希-平板電腦',u:'盒',p:600},{n:'希-文房四寶禮盒',u:'組',p:1600},
-    {n:'希-按摩椅',u:'台',p:1400},{n:'萬-運動鞋(耐吉)',u:'雙',p:150},
-    {n:'小魂身(男/女)',u:'個',p:0},{n:'湯圓/八寶粥(贈送)',u:'份',p:0},
-    {n:'往生被',u:'件',p:50},{n:'(24H)905環保龍王香環',u:'盒',p:60},
-    {n:'高級香環架(金色)',u:'個',p:140},{n:'點-2號屋紙紮屋富貴名園',u:'間',p:2500},
-    {n:'7903三色毛巾+提袋(祥安)',u:'組',p:38},{n:'9007兔子無燃毛巾+皂紙盒',u:'盒',p:100},
-    {n:'1605繡紗布小方巾',u:'條',p:40},{n:'2368雨傘毛巾+提袋',u:'組',p:45},
-    {n:'老船長(小)青白禮盒',u:'盒',p:180},{n:'300ml竹炭瓶水',u:'箱',p:90},
-    {n:'粉雙連(B1)',u:'包',p:100},{n:'小銀56支',u:'件',p:220},
-    {n:'無字-1斤安斗燭(白)',u:'對',p:75},{n:'無字-1斤安斗燭(紅)',u:'對',p:75},
-    {n:'金釘子+紅布',u:'支',p:20},{n:'白色手尾錢-伸縮帶',u:'包',p:300},
-    {n:'藍色手尾錢-伸縮帶',u:'包',p:300},{n:'正-黃金杜拜箱',u:'個',p:1500},
-    {n:'抹草濕紙(良友)',u:'盒',p:200},{n:'空毛巾紙盒',u:'個',p:6},
-    {n:'清潔費/萬善堂/房.蓮花',u:'筆',p:900},{n:'清潔費/萬善堂/房',u:'筆',p:600},
-    {n:'雙色緞/旗袍外套',u:'套',p:700},{n:'六菜湯飯組',u:'付',p:1600},
-    {n:'4號房/紙紮屋',u:'間',p:8000},
+    {n:'高級斧頭組(皮革套+客製)',u:'個',p:4200},{n:'受付牌組黑皮革(磁鐵)4片',u:'組',p:3500},
+    {n:'香筒(皮革)杰盛設計',u:'個',p:800},{n:'雙色緞衣裙-粉色 X',u:'套',p:700},
+    {n:'黃迷你108蓮花被',u:'件',p:500},{n:'4尺有袖麻衣(塑膠麻)',u:'件',p:230},
+    {n:'4尺有袖芋衣*黑繩子',u:'件',p:90},{n:'4尺無袖芋衣',u:'件',p:90},
+    {n:'5尺無袖黃衣',u:'套',p:120},{n:'3尺無袖黃衣',u:'套',p:120},
+    {n:'4.5尺無袖黃衣',u:'件',p:120},{n:'4.5尺藍衣無袖',u:'套',p:120},
+    {n:'4尺藍衣無袖',u:'套',p:120},{n:'3.5尺藍衣無袖',u:'套',p:120},
+    {n:'4尺紅衣無袖',u:'套',p:120},{n:'3.5尺無袖紅衣',u:'套',p:120},
+    {n:'3尺無袖紅衣',u:'套',p:120},{n:'木孝棒',u:'枝',p:60},
+    {n:'無字-1斤安斗燭(紅)',u:'對',p:75},{n:'粉雙連(B1)',u:'包',p:100},
+    {n:'紅迷你108蓮花被',u:'件',p:500},{n:'300ml竹炭瓶水',u:'箱',p:100},
+    {n:'老船長(小)青白禮盒',u:'盒',p:180},{n:'7903三色毛巾+提袋(祥安)',u:'組',p:38},
+    {n:'抹草濕紙巾(歐希)',u:'盒',p:180},{n:'女兒燈',u:'個',p:30},
+    {n:'小紅燈(圓的)',u:'個',p:30},{n:'棉A級(大紅)雙連',u:'包',p:120},
+    {n:'4.5尺藍衣有袖',u:'套',p:120},{n:'4尺藍衣有袖',u:'套',p:120},
+    {n:'3.5尺有袖芋衣',u:'件',p:90},{n:'公媽牌位(紫檀木)',u:'個',p:4200},
+    {n:'公媽牌位-內板',u:'片',p:300},{n:'冥財箱',u:'箱',p:170},
+    {n:'九朵蓮花盤',u:'組',p:140},{n:'麻孝誌(RV5.60A)',u:'包',p:150},
+    {n:'麻+芋孝誌',u:'包',p:150},{n:'芋+麻孝誌',u:'包',p:150},
+    {n:'芋孝誌(RV5-Y)',u:'包',p:150},{n:'黃孝誌(RV5-Y1)',u:'包',p:150},
+    {n:'白色手尾錢-伸縮帶',u:'包',p:300},{n:'藍色手尾錢-伸縮帶',u:'包',p:300},
+    {n:'藍+白色手尾錢-伸縮帶',u:'包',p:300},{n:'黃手尾錢-伸縮帶',u:'個',p:6},
+    {n:'典雅木質牌位(杰盛)20入',u:'個',p:250},{n:'Q版童男女',u:'對',p:200},
+    {n:'新式幡布(紫彩色)',u:'個',p:50},{n:'薄黑長袍4尺',u:'件',p:60},
+    {n:'薄黑長袍4.5尺',u:'件',p:60},{n:'庫錢(萬善堂含清潔費)',u:'包',p:85},
+    {n:'薄黑長袍3.5尺',u:'件',p:60},{n:'白雙連(B1)',u:'包',p:100},
+    {n:'男西裝-灰條 X',u:'套',p:650},{n:'小魂身(男/女)(買房子贈送)',u:'個',p:0},
+    {n:'湯圓/八寶粥(買房子贈送)',u:'份',p:0},{n:'點-5號屋森情農場-$6000-',u:'間',p:3000}
   ],
   '無名祭品':[
-    {n:'大五牲',u:'付',p:1800},{n:'外家大五牲',u:'付',p:1800},
-    {n:'素大五牲',u:'付',p:1200},{n:'葷三牲',u:'付',p:900},
-    {n:'素三牲',u:'付',p:700},{n:'素三盤',u:'付',p:700},
-    {n:'生小三牲',u:'付',p:150},{n:'葷十二菜碗(紙碗)',u:'付',p:400},
-    {n:'葷十二菜碗(瓷碗)',u:'付',p:750},{n:'素十二菜碗(紙碗)',u:'付',p:400},
-    {n:'素十二菜碗(瓷碗)',u:'付',p:750},{n:'葷六菜碗(紙碗)',u:'付',p:250},
-    {n:'葷六菜碗(瓷碗)',u:'付',p:425},{n:'素六菜碗(紙碗)',u:'付',p:250},
-    {n:'素六菜碗(瓷碗)',u:'付',p:425},{n:'素盤',u:'盤',p:250},
-    {n:'四果',u:'份',p:400},{n:'水果塔',u:'盤',p:350},
-    {n:'綜合水果',u:'盤',p:180},{n:'大發糕+大蛋糕',u:'組',p:300},
-    {n:'大蛋糕',u:'個',p:150},{n:'小發糕',u:'個',p:40},
-    {n:'紅圓',u:'個',p:40},{n:'紅龜',u:'個',p:40},
-    {n:'湯圓三碗',u:'份',p:90},{n:'冥財箱',u:'份',p:250},
-    {n:'功功德紙錢(三色金)',u:'份',p:150},{n:'蓮花九朵',u:'串',p:170},
-    {n:'瓶花',u:'對',p:250},{n:'米飯',u:'鍋',p:200},
-    {n:'茶',u:'瓶',p:25},{n:'酒',u:'瓶',p:50},
-    {n:'水',u:'瓶',p:10},{n:'飯',u:'碗',p:10},
-    {n:'米',u:'包',p:200},{n:'瓶水',u:'箱',p:120},
-    {n:'六菜湯飯組',u:'付',p:1600},
+    {n:'大五牲',u:'付',p:1800},{n:'葷三牲',u:'付',p:900},{n:'素三牲',u:'付',p:700},
+    {n:'四果',u:'份',p:400},{n:'紅圓',u:'個',p:40},{n:'紅龜',u:'個',p:40}
   ],
   '烹廚祭品':[
-    {n:'辦桌全席(10人桌)',u:'桌',p:0},{n:'半桌菜(5人份)',u:'桌',p:0},
-    {n:'滷肉飯便當',u:'個',p:0},{n:'素食便當',u:'個',p:0},
-    {n:'麵條(大鍋)',u:'鍋',p:0},{n:'米粉湯(大鍋)',u:'鍋',p:0},
-    {n:'白斬雞',u:'隻',p:0},{n:'控肉',u:'份',p:0},
+    {n:'辦桌全席(10人桌)',u:'桌',p:0},{n:'便當(排骨/雞腿)',u:'個',p:100}
   ],
   '法事':[
-    {n:'做功德(一日)',u:'場',p:0},{n:'做功德(二日)',u:'場',p:0},
-    {n:'頭七法事',u:'場',p:0},{n:'二七法事',u:'場',p:0},
-    {n:'三七法事',u:'場',p:0},{n:'四七法事',u:'場',p:0},
-    {n:'五七法事',u:'場',p:0},{n:'六七法事',u:'場',p:0},
-    {n:'滿七法事',u:'場',p:0},{n:'百日法事',u:'場',p:0},
-    {n:'對年法事',u:'場',p:0},{n:'燒庫錢',u:'場',p:0},
-    {n:'誦經(一堂)',u:'堂',p:0},{n:'普渡法事',u:'場',p:0},
-    {n:'超渡牌位',u:'份',p:0},{n:'出殯儀式',u:'場',p:0},
-    {n:'安神位',u:'次',p:0},
+    {n:'頭七法事',u:'場',p:0},{n:'三七法事',u:'場',p:0},{n:'出殯儀式',u:'場',p:0}
   ],
   '今榮租車':[
-    {n:'靈車(一般)',u:'趟',p:0},{n:'靈車(長程)',u:'趟',p:0},
-    {n:'禮車(家屬)',u:'輛',p:0},{n:'遊覽車',u:'輛',p:0},
-    {n:'冷凍車',u:'天',p:0},{n:'停車費',u:'次',p:0},
-    {n:'高速公路過路費',u:'次',p:0},
+    {n:'靈車(一般)',u:'趟',p:0},{n:'禮車(家屬)',u:'輛',p:0}
   ],
 };
 
-// ═══════════════════════════════════════════════════════
-// 狀態狀態
-// ═══════════════════════════════════════════════════════
+let VI = JSON.parse(JSON.stringify(BASE_VI)); // 運行中的總品項資料庫
+let customItems = {}; // 存放使用者自訂累積的細項
+
 let CU = null; 
 let cases = [];
 let users = [];
@@ -432,18 +403,52 @@ const DEFAULT_USERS = [
   {id:2,name:'員工一',username:'staff1',password:'staff123',role:'staff'},
 ];
 
+// 混合本地與端雲儲存器
+async function cloudGet(key) {
+  try {
+    if (window.storage && typeof window.storage.get === 'function') {
+      const result = await window.storage.get(key);
+      if (!result) return null;
+      return JSON.parse(result.value);
+    } else {
+      const localValue = localStorage.getItem(key);
+      return localValue ? JSON.parse(localValue) : null;
+    }
+  } catch(e) { 
+    const localValue = localStorage.getItem(key);
+    return localValue ? JSON.parse(localValue) : null;
+  }
+}
+
+async function cloudSet(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    if (window.storage && typeof window.storage.set === 'function') {
+      await window.storage.set(key, JSON.stringify(value));
+    }
+    return true;
+  } catch(e) { return false; }
+}
+
 // ═══════════════════════════════════════════════════════
 // 初始化
 // ═══════════════════════════════════════════════════════
 async function init() {
   setSyncLine('⏳ 連線本地與雲端資料庫...');
 
+  // 讀取自訂帳號
   const cloudUsers = await cloudGet(STORAGE_KEY_USERS);
   users = cloudUsers || DEFAULT_USERS;
   if (!cloudUsers) await cloudSet(STORAGE_KEY_USERS, users);
 
+  // 讀取案件
   const cloudCases = await cloudGet(STORAGE_KEY_CASES);
   cases = cloudCases || [];
+
+  // 讀取永久自訂細項
+  const cloudCustom = await cloudGet(STORAGE_KEY_CUSTOM_ITEMS);
+  customItems = cloudCustom || { '明得堂':[], '無名祭品':[], '烹廚祭品':[], '法事':[], '今榮租車':[] };
+  mergeCustomItems();
 
   setSyncLine('✓ 資料庫已就緒');
 
@@ -454,13 +459,28 @@ async function init() {
   }
 }
 
+// 合併內建基礎品項與使用者後來永久累積的細項
+function mergeCustomItems() {
+  VI = JSON.parse(JSON.stringify(BASE_VI)); // 重置
+  Object.keys(customItems).forEach(v => {
+    if (VI[v]) {
+      // 避免重複加入
+      customItems[v].forEach(cItem => {
+        if (!VI[v].some(base => base.n === cItem.n)) {
+          VI[v].push(cItem);
+        }
+      });
+    }
+  });
+}
+
 function setSyncLine(msg) {
   const el = document.getElementById('syncLine');
   if (el) el.textContent = msg;
 }
 
 // ═══════════════════════════════════════════════════════
-// 登入
+// 登入登出邏輯
 // ═══════════════════════════════════════════════════════
 function doLogin() {
   const u = document.getElementById('lu').value.trim();
@@ -481,14 +501,12 @@ function loginAs(user) {
   rb.textContent = user.role === 'admin' ? '老闆' : '員工';
   rb.className = 'rbadge ' + (user.role === 'admin' ? 'rb-admin' : 'rb-staff');
   
-  if (user.role === 'admin') {
-    document.getElementById('adminTab').style.display = 'block';
-  } else {
-    document.getElementById('adminTab').style.display = 'none';
-  }
+  // 開放管理分頁給所有人，方便員工也能動態追加累積廠商細項
+  document.getElementById('adminTab').style.display = 'block';
   
   setSyncLine('✓ 已登入・資料即時同步');
   renderCases(); renderStats();
+  renderAdminItems();
   if (user.role === 'admin') renderUList();
 }
 
@@ -497,12 +515,81 @@ function doLogout() {
   CU = null;
   document.getElementById('s-app').classList.remove('on');
   document.getElementById('s-login').classList.add('on');
-  document.getElementById('lu').value = '';
-  document.getElementById('lp').value = '';
 }
 
 // ═══════════════════════════════════════════════════════
-// 案件 CRUD
+// 核心升功能：管理端永久追加細項
+// ═══════════════════════════════════════════════════════
+function openAddDbItem() {
+  const currentV = document.getElementById('adm-v').value;
+  document.getElementById('dbi-v').value = currentV;
+  document.getElementById('dbi-n').value = '';
+  document.getElementById('dbi-u').value = '';
+  document.getElementById('dbi-p').value = '';
+  openM('mAddDbItem');
+}
+
+async function saveItemToDb() {
+  const v = document.getElementById('dbi-v').value;
+  const n = document.getElementById('dbi-n').value.trim();
+  const u = document.getElementById('dbi-u').value.trim() || '個';
+  const p = parseFloat(document.getElementById('dbi-p').value) || 0;
+
+  if (!n) { showToast('請輸入品項名稱'); return; }
+
+  if (!customItems[v]) customItems[v] = [];
+  
+  // 檢查是否在大水庫重複
+  if (VI[v].some(item => item.n === n)) {
+    showToast('該品項名稱已存在，不需重複建立');
+    return;
+  }
+
+  customItems[v].push({ n, u, p });
+  await cloudSet(STORAGE_KEY_CUSTOM_ITEMS, customItems);
+  
+  mergeCustomItems(); // 重新合併
+  renderAdminItems(); // 重新整理管理畫面清單
+  closeM('mAddDbItem');
+  showToast(`✓ 已成功累積至【${v}】常駐選單中`);
+}
+
+function renderAdminItems() {
+  const v = document.getElementById('adm-v').value;
+  const listDiv = document.getElementById('admin-item-list');
+  const items = VI[v] || [];
+  
+  if(!items.length) {
+    listDiv.innerHTML = '<div style="color:var(--t3); padding:8px;">尚無品項</div>';
+    return;
+  }
+
+  listDiv.innerHTML = items.map((it, idx) => {
+    // 判斷是否為後來才自訂加入的（提供刪除按鈕）
+    const isCustom = customItems[v] && customItems[v].some(c => c.n === it.n);
+    return `<div class="pitem-row">
+      <div><strong>${it.n}</strong> <span style="color:var(--t2); font-size:11px;">(${it.u})</span></div>
+      <div style="color:var(--gold); display:flex; align-items:center; gap:10px;">
+        $${it.p.toLocaleString()}
+        ${isCustom ? `<button class="bsm d" style="padding:2px 6px;" onclick="deleteDbItem('${v}','${it.n}')">刪除</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteDbItem(v, name) {
+  if (!confirm(`確定要將【${name}】從常駐選單中移除嗎？`)) return;
+  if (customItems[v]) {
+    customItems[v] = customItems[v].filter(c => c.n !== name);
+    await cloudSet(STORAGE_KEY_CUSTOM_ITEMS, customItems);
+    mergeCustomItems();
+    renderAdminItems();
+    showToast('已自選單移出');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// 案件功能
 // ═══════════════════════════════════════════════════════
 function openNewCase() {
   const t = new Date();
@@ -535,7 +622,7 @@ async function saveNewCase() {
 }
 
 async function deleteCase(id) {
-  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除'); return; }
+  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除案件'); return; }
   if (!confirm('確定刪除此案件及所有費用？')) return;
   cases = cases.filter(c => c.id !== id);
   await syncCases();
@@ -544,13 +631,13 @@ async function deleteCase(id) {
 }
 
 async function togglePaid(id) {
-  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可操作'); return; }
+  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可變更結清狀態'); return; }
   const c = cases.find(x => x.id === id);
   if (c) { c.paid = !c.paid; await syncCases(); renderCases(); renderStats(); }
 }
 
 // ═══════════════════════════════════════════════════════
-// 費用 CRUD
+// 費用功能 (會整合最新的常駐自訂欄位)
 // ═══════════════════════════════════════════════════════
 function openAddExp(cid) {
   activeCID = cid;
@@ -558,7 +645,7 @@ function openAddExp(cid) {
   const c = cases.find(x => x.id === cid);
   if(!c) return;
   document.getElementById('expTitle').innerHTML =
-    `<span style="color:var(--gold2);font-size:13px;">${c.name}</span>　新增費用
+    `<span style="color:var(--gold2);font-size:13px;">${c.name}</span>　新增費用明細
      <button class="mclose" onclick="closeM('mAddExp')">✕</button>`;
   ['ev','el','eamt','enote','esrch','ecn','ecp'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('edate').value = new Date().toISOString().split('T')[0];
@@ -579,8 +666,9 @@ function onEV() {
 
 function renderEItems() {
   const v = document.getElementById('ev').value;
-  const q = document.getElementById('esrch').value;
-  const items = (VI[v] || []).filter(it => !q || it.n.includes(q));
+  const q = document.getElementById('esrch').value.toLowerCase();
+  const items = (VI[v] || []).filter(it => !q || it.n.toLowerCase().includes(q));
+  
   document.getElementById('egrid').innerHTML = items.map((it) => {
     const gi = (VI[v] || []).findIndex(x => x.n === it.n);
     const sel = eSel.find(s => s.name === it.n && !s.custom);
@@ -628,13 +716,12 @@ function renderESel() {
     <div class="srow">
       <span class="sname">${s.name}</span>
       <div class="sqty"><span>數量</span><input type="number" value="${s.qty}" min="1" oninput="changeEQ(${i},this.value)"></div>
-      <span class="sprice">${s.price > 0 ? '$' + (s.price * s.qty) : '-'}</span>
+      <span class="sprice">${s.price > 0 ? '$' + (s.price * s.qty).toLocaleString() : '-'}</span>
       <button class="srem" onclick="removeEI(${i})">✕</button>
     </div>`).join('');
 }
 
 function recalcE() {
-  // 如果勾選的品項加總大於 0 才進行覆蓋，防止因為計費為0而把自訂金額洗掉
   const t = eSel.reduce((s, it) => s + (it.price * it.qty), 0);
   if (t > 0) document.getElementById('eamt').value = t;
 }
@@ -647,7 +734,7 @@ async function saveExp() {
   const date = document.getElementById('edate').value;
   const note = document.getElementById('enote').value.trim();
   if (!vendor) { showToast('請選擇廠商'); return; }
-  if (!label && !eSel.length) { showToast('請輸入費用說明或選擇品項'); return; }
+  if (!label && !eSel.length) { showToast('請選擇品項或手動輸入說明'); return; }
   
   const c = cases.find(x => x.id === activeCID); if (!c) return;
   const btn = document.getElementById('eSaveBtn');
@@ -655,7 +742,7 @@ async function saveExp() {
   
   c.expenses.push({
     id: Date.now(), vendor,
-    label: label || (eSel.map(s => s.name).join('、')),
+    label: label || (eSel.map(s => `${s.name}(${s.qty}${s.unit||'個'})`).join('、')),
     amount, date, note, items: [...eSel],
     addedBy: CU ? CU.name : 'System'
   });
@@ -667,7 +754,7 @@ async function saveExp() {
 }
 
 async function deleteExp(cid, eid) {
-  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除'); return; }
+  if (!CU || CU.role !== 'admin') { showToast('⚠️ 僅老闆可刪除費用明細'); return; }
   const c = cases.find(x => x.id === cid); if (!c) return;
   if (!confirm('確定要刪除這筆費用明細嗎？')) return;
   c.expenses = c.expenses.filter(e => e.id !== eid);
@@ -683,7 +770,7 @@ async function syncCases() {
 }
 
 // ═══════════════════════════════════════════════════════
-// 渲染案件
+// 畫面渲染與後台介面處理
 // ═══════════════════════════════════════════════════════
 function renderCases() {
   const months = [...new Set(cases.map(c => c.month))].filter(Boolean).sort().reverse();
@@ -726,9 +813,8 @@ function renderCCard(c) {
         ${exps.map(e => `<div class="eline">
           <div class="einfo">
             <div class="ename">${e.label}</div>
-            ${e.items && e.items.length ? `<div class="edetail">${e.items.map(it => `${it.name}${it.qty > 1 ? '×' + it.qty : ''}`).join('　')}</div>` : ''}
             ${e.note ? `<div class="enote">${e.note}</div>` : ''}
-            <div class="edate">${e.date || ''}　${e.addedBy || ''}</div>
+            <div class="edate">${e.date || ''}　登記者：${e.addedBy || ''}</div>
           </div>
           <div style="display:flex;align-items:center;gap:7px">
             <span class="eprice">${e.amount > 0 ? '$' + e.amount.toLocaleString() : '-'}</span>
@@ -736,7 +822,6 @@ function renderCCard(c) {
           </div>
         </div>`).join('')}
       </div>
-      <div class="vsub">小計<strong>$${vs.toLocaleString()}</strong></div>
     </div>`;
   }).join('') || `<div style="color:var(--t2);font-size:13px;text-align:center;padding:14px 0">尚無費用，點「新增費用」開始記帳</div>`;
 
@@ -751,12 +836,11 @@ function renderCCard(c) {
         </div>
         <div class="ccase-r">
           <div class="ccase-total">$${total.toLocaleString()}</div>
-          <div class="ccase-sub">${c.expenses.length} 筆　▾</div>
+          <div class="ccase-sub">${c.expenses.length} 筆明細　▾</div>
         </div>
       </div>
       <div class="ccase-chips">
         ${vendors.map(v => `<span class="chip c${v}">${v}</span>`).join('')}
-        ${!vendors.length ? '<span style="font-size:12px;color:var(--t3)">點擊展開新增費用</span>' : ''}
       </div>
     </div>
     <div class="ccase-body" id="cb-${c.id}">
@@ -775,9 +859,6 @@ function toggleBody(id) {
   if(el) el.classList.toggle('open');
 }
 
-// ═══════════════════════════════════════════════════════
-// 統計
-// ═══════════════════════════════════════════════════════
 function renderStats() {
   const months = [...new Set(cases.map(c => c.month))].filter(Boolean).sort().reverse();
   document.getElementById('sMonthF').innerHTML =
@@ -791,11 +872,10 @@ function renderStats() {
 
   document.getElementById('sgrid').innerHTML = `
     <div class="sbox"><div class="snum">$${total.toLocaleString()}</div><div class="slbl">總金額</div></div>
-    <div class="sbox"><div class="snum" style="color:var(--red)">$${unpaid.toLocaleString()}</div><div class="slbl">未結清</div></div>
-    <div class="sbox"><div class="snum">${fc.length}</div><div class="slbl">案件數</div></div>
-    <div class="sbox"><div class="snum">${allE.length}</div><div class="slbl">費用筆數</div></div>`;
+    <div class="sbox"><div class="snum" style="color:var(--red)">$${unpaid.toLocaleString()}</div><div class="slbl">未結清金額</div></div>
+    <div class="sbox"><div class="snum">${fc.length}</div><div class="slbl">總案件數量</div></div>
+    <div class="sbox"><div class="snum">${allE.length}</div><div class="slbl">費用總筆數</div></div>`;
 
-  // 廠商統計
   const vMap = {};
   allE.forEach(e => { if (!vMap[e.vendor]) vMap[e.vendor] = { t: 0, n: 0 }; vMap[e.vendor].t += e.amount; vMap[e.vendor].n++; });
   document.getElementById('vstats').innerHTML = Object.entries(vMap)
@@ -805,7 +885,6 @@ function renderStats() {
       <div style="text-align:right"><div class="sumamt">$${d.t.toLocaleString()}</div><div class="sumsub">${d.n}筆</div></div>
     </div>`).join('') || '<div class="empty" style="padding:20px">尚無資料</div>';
 
-  // 月份統計
   const mMap = {};
   cases.forEach(c => {
     const m = c.month || '未知';
@@ -824,9 +903,6 @@ function renderStats() {
 
 function setSM(m) { sMonth = m; renderStats(); }
 
-// ═══════════════════════════════════════════════════════
-// 帳號管理
-// ═══════════════════════════════════════════════════════
 function renderUList() {
   document.getElementById('ulist').innerHTML = users.map(u => `
     <div class="urow">
@@ -869,11 +945,8 @@ async function deleteUser(id) {
   showToast('已刪除');
 }
 
-// ═══════════════════════════════════════════════════════
-// 備份匯出入
-// ═══════════════════════════════════════════════════════
 function exportData() {
-  const blob = new Blob([JSON.stringify({ cases, users, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({ cases, users, customItems, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `祥安帳款備份_${new Date().toISOString().substring(0, 10)}.json`;
@@ -888,17 +961,15 @@ async function importData(e) {
       const d = JSON.parse(ev.target.result);
       if (d.cases) { cases = d.cases; await cloudSet(STORAGE_KEY_CASES, cases); }
       if (d.users) { users = d.users; await cloudSet(STORAGE_KEY_USERS, users); }
-      renderCases(); renderStats(); renderUList();
-      showToast('✓ 匯入成功・已同步');
+      if (d.customItems) { customItems = d.customItems; await cloudSet(STORAGE_KEY_CUSTOM_ITEMS, customItems); }
+      mergeCustomItems(); renderCases(); renderStats(); renderUList(); renderAdminItems();
+      showToast('✓ 匯入成功・資料已連步');
     } catch (err) { showToast('❌ 格式錯誤'); }
   };
   reader.readAsText(file);
   e.target.value = '';
 }
 
-// ═══════════════════════════════════════════════════════
-// 工具函式
-// ═══════════════════════════════════════════════════════
 function showPg(p) {
   document.querySelectorAll('.pg').forEach(el => el.classList.remove('on'));
   document.querySelectorAll('.nav button').forEach(el => el.classList.remove('on'));
@@ -906,7 +977,7 @@ function showPg(p) {
   const idx = { cases: 0, stats: 1, admin: 2 }[p];
   document.querySelectorAll('.nav button')[idx].classList.add('on');
   if (p === 'stats') renderStats();
-  if (p === 'admin') renderUList();
+  if (p === 'admin') { renderAdminItems(); if(CU && CU.role==='admin') renderUList(); }
 }
 
 function openM(id) { document.getElementById(id).classList.add('open'); }
@@ -920,7 +991,6 @@ function showToast(msg) {
   }
 }
 
-// 啟動
 init();
 </script>
 </body>
